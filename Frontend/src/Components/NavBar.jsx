@@ -14,7 +14,7 @@ const listItems = [
     {label: "about", path: "/about"},
     {label: "home", path: "/"},
     {label: "dashboard", path: "/dashboard"},
-    {label: "contact", path: "/contact"}
+   
 
 ]
 
