@@ -1,0 +1,31 @@
+# Virtual Environments (Catch everywhere in project)
+.venv/
+venv/
+**/ .venv/
+**/ venv/
+ml_pipeline/.venv/
+
+# Python Cache & Compiled Files
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Environment Variables
+.env
+.env.local
+
+# Node / React
+node_modules/
+**/node_modules/
+build/
+dist/
+
+# OS / Editor Files
+.DS_Store
+.vscode/
+.idea/
+
+# Large Dataset Files (Optional: ignore extra CSVs if needed)
+*.zip
