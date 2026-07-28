@@ -4,7 +4,7 @@
 // Description: This file contains the AppLayout component, which is the main layout for the application. It includes the background paths and the main content area.
 
 
-import { BackgroundPaths } from "@/Components/ui/background";
+import { BackgroundPaths } from "../Components/ui/background";
 import { Outlet } from "react-router-dom";
 import NavBar from "../Components/NavBar";
 
@@ -21,9 +21,8 @@ function AppLayout() {
                     {<Outlet />}
         </main>
 
-
-        // Footer can be added here if needed
-        // Below the footer will be the policies or like term and conditions of the application
+        {/*  Footer can be added here if needed */}
+        {/* Below the footer will be the policies or like term and conditions of the application */}
         </div>
         </div>
 
