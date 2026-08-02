@@ -12,8 +12,8 @@ import Home from './views/Home.jsx'
 import Login from './views/Login.jsx'
 import Signup from './views/Signup.jsx'
 import NotFound from './views/NotFound.jsx'
-import { BackgroundPaths } from './Components/ui/background'
 
+import { FluidParticlesBackground } from "./Components/ui/background.jsx";
 // views built later
 // import AppLayout from './views/AppLayout'
 // import About from './views/About'
@@ -32,9 +32,9 @@ function App() {
   return (
     <>
       
-      <BackgroundPaths />
+      
     </>
   )
 }
 
-export default App
+export default App;

@@ -175,3 +175,5 @@ function Aup() {
         </div>
     )
 }
+
+export default Aup;
