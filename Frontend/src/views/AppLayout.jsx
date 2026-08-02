@@ -23,6 +23,15 @@ function AppLayout() {
 
         {/*  Footer can be added here if needed */}
         {/* Below the footer will be the policies or like term and conditions of the application */}
+
+        <div className="">
+           {<Aup />}
+        </div>
+
+        <div className="">
+           {<PrivacyPolicy />}
+        </div>
+
         </div>
         </div>
 
