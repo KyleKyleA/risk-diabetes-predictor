@@ -10,11 +10,13 @@ import PrivacyPolicy from "../Components/Policies";
 
 function AppLayout() {
     return (
-        <FluidParticlesBackground>
+        <div className="min-h-screen w-full flex flex-col relative">
+        <FluidParticlesBackground />
 
         <div className="relative z-10 flex flex-col min-h-screen">
         <NavBar />
        
+        
 
 
         <main className="w-full flex-1">
@@ -23,19 +25,20 @@ function AppLayout() {
 
         {/*  Footer can be added here if needed */}
         {/* Below the footer will be the policies or like term and conditions of the application */}
-          <footer className="w-full py-4 flex justify-center gap-6 text-sm text-black/70">
+        <footer className="w-full py-4 flex justify-center gap-6 text-sm text-black/70">
                     <Link to="/aup" className="hover:text-white underline">
                         Acceptable Use Policy
                     </Link>
                     <Link to="/privacy-policy" className="hover:text-white underline">
                         Privacy Policy
                     </Link>
-                </footer>
-            </div>
+        </footer>
+        </div>
+        </div>
 
         
 
-       </FluidParticlesBackground>
+       
         
 
 
