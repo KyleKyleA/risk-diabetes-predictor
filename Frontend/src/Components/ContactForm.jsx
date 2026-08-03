@@ -141,13 +141,31 @@ function ContactForm({onSuccess}) {
         
         {/* Contact Form */}
         <div className="contact-form-container">
-            <form className="">
-            <p className="">Contact Us</p>
-                <div className="">
-
+            <form className="flex flex-col items-center text-sm">
+            <p className="text-lg text-black-600 font-medium pb-2 pt-24">Contact Us</p>
+            
+            <div className="">
+                <div className="w-full">
+                    <label className="text-black/100" htmlFor="name" >Your Name</label>
+                    <input className="" placeholder="Enter your name" required/>
                 </div>
+                <div className="w-full">
+                    <label className="text-black/100" htmlFor="email">Your Email</label>
+                    <input className="" placeholder="Enter your email" required/>
+                </div>
+                <div className="mt-6 w-[350px] md:w-[700px]">
+                    <label className="text-black/100" htmlFor="title">Subject</label>
+                    <textarea className="w-full mt-2 p-2 h-40 border border-gray-500/30 rounded resize-none outline-none focus:border-indigo-300" placeHolder="Enter subject of your message" required />
+                </div>
+                <div className="w-mt-6 w-[350px] md:w-[700px]">
+                    <label className="text-black/100" htmlFor="message">Message</label>
+                    <textarea className="w-full mt-2 p-2 h-40 border border-gray-500/30 rounded resize-none outline-none focus:border-indigo-300" id="message" name="message" placeholder="Write your message here..." value={formData.message} onChange={handleChange} required />
+                </div>
+            </div>
 
+            <button type="submit" className="mt-5 bg-violet-500 text-black h-12 w-32 px-4 rounded active:scale-95 transition">Send Message</button>
 
+            <br />
             </form>
 
 
@@ -156,6 +174,30 @@ function ContactForm({onSuccess}) {
         {/* Social Links */}
         <div className="contact-social mt-12 text-center">
             <p className="">Or reach out to me on social media</p>
+            {/* LinkedIn */}
+            <div className="">
+                <a href="https://www.linkedin.com/in/kyle-angeles-b07ba7315/" target="_blank" rel="noopener noreferrer" className="">
+                    <img src="">
+                    
+                    </img>
+                </a>
+            </div>
+            {/* Github */}
+            <div className="">
+                <a href="https://github.com/KyleKyleA" target="_blank" rel="noopener noreferrer" className="">
+                    <img src="">
+                    
+                    </img>
+                </a>
+            </div>
+            {/* Instagram */}
+            <div className="">
+                <a href="https://www.instagram.com/kai__topluto/" target="_blank" rel="noopener noreferrer" className="">
+                    <img src="">
+                    
+                    </img>
+                </a>
+            </div>
 
         </div>
         
