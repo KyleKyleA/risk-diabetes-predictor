@@ -21,18 +21,19 @@ const email = [
 ]
 
 // REGION FUNCTION
-function ContactForm({onSubmit}) { 
+function ContactForm({onSuccess}) { 
 
     const [formData, setFormData] = useState({
 
         name: "",
+        title: "",
         email: "",
         message: ""
     })
 
    
     const [errors, setErrors] = useState({})
-    const [status, setStatus] = useState("");
+    const [status, setStatus] = useState("idle");
     const [message, setStatusMessage] = useState("");
    
     const validateForm = () => {
@@ -59,8 +60,10 @@ function ContactForm({onSubmit}) {
         }
 
         // Validate message
-        if (!formData.message.trim() || formData.message.length < 10) {
-            newErrors.message 
+        if (!formData.message.trim()) {
+            newErrors.message = "Message is required";
+        } else if (!formData.message.trim() || formData.message.length < 10) {
+            newErrors.message = ("Message must be at least 10 or more characters long");
         }
 
         
@@ -69,45 +72,24 @@ function ContactForm({onSubmit}) {
         // if empty no errors, if otherwise notify user with the errors
         return newErrors;
 
+    };
 
-
-
-
-}
     // Submission Validation
-    const handleChange = (e) => {
-
-        const {name, value} = e.target;
-        setFormData(prev => ({...prev, [name]: value}));
+     const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
 
         if (errors[name]) {
-            setErrors(prev => ({...prev, [name]: ""}));
-    }
-}
-
-    // Form submission
-    const handleSubmit = async (e) => {
-
-        e.preventDefault();
-        const newErrors = validateForm();
-
-        if (Object.keys(validationErrors).length > 0) {
-            setErrors(validateForm);
-            return
+            setErrors((prev) => ({ ...prev, [name]: "" }));
         }
+    };
 
-        setStatus("Submitting... ");
-        setStatusMessage("Please wait while we process your request.");
-
-
-        
-    }
-
-    // EmailJS Integration
+     // EmailJS Integration
     const sendEmail = async () => { 
         e.preventDefault();
 
-        email.js.sendForm(
+        emailjs
+            .sendForm(
             'service_bu4nvsq', // SERVICE ID
             'template_zv6oh4i', // TEMPLATE ID
             e.target, // FORM ELEMENT
@@ -119,33 +101,73 @@ function ContactForm({onSubmit}) {
                 setStatus("Success");
                 setStatusMessage(" Your message has been sent successfully! will get back to you as soon as possible.");
                 e.target.reset();
+                setFormData({name: "", email: "", message: ""});
+                if (onSuccess) {
+                    onSuccess();
+                }
             }, (error) => {
                 console.log(error.text);
                 setStatus("Error");
-                setStatus("An error occurred while sending your message. Please try again later.");
-            });
+                setStatus("An error occurred while sending your message. Please try again later."
 
-
-
-
+                );
+            }
+        );
     };
+
+    // Form submission
+     // Form submission
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const newErrors = validateForm();
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return;
+        }
+
+        setStatus("submitting");
+        setStatusMessage("Please wait while we process your request.");
+
+        sendEmail(e);
+    };
+
+
 
     // Styling and UI for the contact form
     return (
         <>
         
+        
         {/* Contact Form */}
+        <div className="contact-form-container">
+            <form className="">
+            <p className="">Contact Us</p>
+                <div className="">
+
+                </div>
+
+
+            </form>
+
 
         {/* Email for easy contact if they don't prefer filling out the form */}
 
         {/* Social Links */}
-        
-        </>
+        <div className="contact-social mt-12 text-center">
+            <p className="">Or reach out to me on social media</p>
 
+        </div>
+        
+        
+        </div>
+        </>
     )
 
 
-}
+};
+
+
 
 
 export default ContactForm;
