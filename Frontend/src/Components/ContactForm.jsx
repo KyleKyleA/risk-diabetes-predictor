@@ -30,12 +30,11 @@ function ContactForm({onSubmit}) {
         message: ""
     })
 
-    
+   
     const [errors, setErrors] = useState({})
     const [status, setStatus] = useState("");
     const [message, setStatusMessage] = useState("");
-    const [isSubmitting, setIsSubmitting] = useState(false);
-
+   
     const validateForm = () => {
         const newErrors = {};
 
@@ -64,6 +63,8 @@ function ContactForm({onSubmit}) {
             newErrors.message 
         }
 
+        
+
 
         // if empty no errors, if otherwise notify user with the errors
         return newErrors;
@@ -73,7 +74,16 @@ function ContactForm({onSubmit}) {
 
 
 }
+    // Submission Validation
+    const handleChange = (e) => {
 
+        const {name, value} = e.target;
+        setFormData(prev => ({...prev, [name]: value}));
+
+        if (errors[name]) {
+            setErrors(prev => ({...prev, [name]: ""}));
+    }
+}
 
     // Form submission
     const handleSubmit = async (e) => {
@@ -88,7 +98,54 @@ function ContactForm({onSubmit}) {
 
         setStatus("Submitting... ");
         setStatusMessage("Please wait while we process your request.");
+
+
+        
     }
+
+    // EmailJS Integration
+    const sendEmail = async () => { 
+        e.preventDefault();
+
+        email.js.sendForm(
+            'service_bu4nvsq', // SERVICE ID
+            'template_zv6oh4i', // TEMPLATE ID
+            e.target, // FORM ELEMENT
+            'V9NUCftt00Ip-8UW_' // PUBLIC KEY
+
+        )
+            .then((result ) => {
+                console.log(result.text);
+                setStatus("Success");
+                setStatusMessage(" Your message has been sent successfully! will get back to you as soon as possible.");
+                e.target.reset();
+            }, (error) => {
+                console.log(error.text);
+                setStatus("Error");
+                setStatus("An error occurred while sending your message. Please try again later.");
+            });
+
+
+
+
+    };
+
+    // Styling and UI for the contact form
+    return (
+        <>
+        
+        {/* Contact Form */}
+
+        {/* Email for easy contact if they don't prefer filling out the form */}
+
+        {/* Social Links */}
+        
+        </>
+
+    )
+
+
 }
+
 
 export default ContactForm;
