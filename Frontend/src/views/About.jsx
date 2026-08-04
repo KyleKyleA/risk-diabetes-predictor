@@ -7,7 +7,7 @@ function About() {
 
 
     return (
-
+        
         <div className="max-w-5xl mx-auto px-6 pt-24 pb-16">
 
             <h2 className="text-white-400 text-center">About</h2>

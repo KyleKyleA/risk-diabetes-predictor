@@ -9,6 +9,10 @@ import {useState} from "react";
 import validator from "validator";
 import emailjs from "@emailjs/browser";
 
+import GitHubIcon from "../images/github.png";
+import InstagramIcon from "../images/instagram.png";
+import LinkedinIcon from "../images/linkedin.png";
+
 // Social icons 
 
 const email = [
@@ -85,7 +89,7 @@ function ContactForm({onSuccess}) {
     };
 
      // EmailJS Integration
-    const sendEmail = async () => { 
+    const sendEmail = async (e) => { 
         e.preventDefault();
 
         emailjs
@@ -108,9 +112,9 @@ function ContactForm({onSuccess}) {
             }, (error) => {
                 console.log(error.text);
                 setStatus("Error");
-                setStatus("An error occurred while sending your message. Please try again later."
+                setStatusMessage("An error occurred while sending your message. Please try again later.");
 
-                );
+                
             }
         );
     };
@@ -141,29 +145,40 @@ function ContactForm({onSuccess}) {
         
         {/* Contact Form */}
         <div className="contact-form-container">
-            <form className="flex flex-col items-center text-sm">
+            <form className="flex flex-col items-center text-sm on" onSubmit={handleSubmit}>
             <p className="text-lg text-black-600 font-medium pb-2 pt-24">Contact Us</p>
             
             <div className="">
                 <div className="w-full">
-                    <label className="text-black/100" htmlFor="name" >Your Name</label>
-                    <input className="" placeholder="Enter your name" required/>
+                    <label className="text-black/100 gap-2" >Your Name:</label>
+                    <input className="h-12 p-2 mt-2 w-full border border-gray-500/30 rounded outline-none focus:border-indigo-300" id="name" name="name" value={formData.name} onChange={handleChange} placeholder="Enter your name" required
+                    />
+                   
                 </div>
                 <div className="w-full">
                     <label className="text-black/100" htmlFor="email">Your Email</label>
-                    <input className="" placeholder="Enter your email" required/>
+                    <input className="h-12 p-2 mt-2 w-full border border-gray-500/30 rounded outline-none focus:border-indigo-300" id="email" name="email" type="email" value={formData.email} onChange={handleChange} placeholder="Enter your email" required
+                    />
+                    
                 </div>
                 <div className="mt-6 w-[350px] md:w-[700px]">
                     <label className="text-black/100" htmlFor="title">Subject</label>
-                    <textarea className="w-full mt-2 p-2 h-40 border border-gray-500/30 rounded resize-none outline-none focus:border-indigo-300" placeHolder="Enter subject of your message" required />
+                    <textarea id="title" name="title"className="w-full mt-2 p-2 h-40 border border-gray-500/30 rounded resize-none outline-none focus:border-indigo-300" placeHolder="Enter subject of your message" value={formData.title} onChange={handleChange} required 
+                    />
+                   
                 </div>
                 <div className="w-mt-6 w-[350px] md:w-[700px]">
                     <label className="text-black/100" htmlFor="message">Message</label>
-                    <textarea className="w-full mt-2 p-2 h-40 border border-gray-500/30 rounded resize-none outline-none focus:border-indigo-300" id="message" name="message" placeholder="Write your message here..." value={formData.message} onChange={handleChange} required />
+                    <textarea className="w-full mt-2 p-2 h-40 border border-gray-500/30 rounded resize-none outline-none focus:border-indigo-300" id="message" name="message" placeholder="Write your message here..." value={formData.message} onChange={handleChange} required 
+                    />
+                   
                 </div>
             </div>
 
-            <button type="submit" className="mt-5 bg-violet-500 text-black h-12 w-32 px-4 rounded active:scale-95 transition">Send Message</button>
+            <button type="submit" disabled={status === 'submitting'} className="mt-5 bg-violet-500 text-black h-12 w-32 px-4 rounded active:scale-95 transition" >Send Message
+            </button>
+
+           
 
             <br />
             </form>
@@ -173,27 +188,27 @@ function ContactForm({onSuccess}) {
 
         {/* Social Links */}
         <div className="contact-social mt-12 text-center">
-            <p className="">Or reach out to me on social media</p>
+            <p className="text-m text-black-500 font-medium pt-8">Or reach out to me on social media</p>
             {/* LinkedIn */}
-            <div className="">
+            <div className="flex items-center justify-center gap-2 mt-4">
                 <a href="https://www.linkedin.com/in/kyle-angeles-b07ba7315/" target="_blank" rel="noopener noreferrer" className="">
-                    <img src="">
+                    <img src={LinkedinIcon} alt="LinkedIn" className="w-15 h-20" >
                     
                     </img>
                 </a>
             </div>
             {/* Github */}
-            <div className="">
+            <div className="flex items-center justify-center gap 2 mt-4">
                 <a href="https://github.com/KyleKyleA" target="_blank" rel="noopener noreferrer" className="">
-                    <img src="">
+                    <img src={GitHubIcon} alt="github" className="w-15 h-10">
                     
                     </img>
                 </a>
             </div>
             {/* Instagram */}
-            <div className="">
+            <div className="flex items-center justify-center gap 2 mt-4">
                 <a href="https://www.instagram.com/kai__topluto/" target="_blank" rel="noopener noreferrer" className="">
-                    <img src="">
+                    <img src={InstagramIcon} alt="instagram" className="w-15 h-10">
                     
                     </img>
                 </a>
