@@ -39,12 +39,24 @@ function signUp(onSuccess) {
         }
 
         // validate phone
+        const phoneRegex = /^[0-9]+$/;
+
         if(!FormData.phone.trim()) {
-            newErrors = "Phone is required";
+            newErrors = "Phone number is required";
+        } else if (!FormData.phone.length < 15) {
+            newErrors = "Phone number must be at least 15 characters long";
+        } else if (!validator.isPhone(formData.email)) {
+            newErrors = "Phone number is invalid format";
+        } else if(!phoneRegex.test(FormData)) {
+            newErrors = "Phone number can only contain numerical values";
         }
 
-
-    }
+        // validate password
+        if (!FormData.password.trim()) {
+            newErrors = "Password is required";
+        } else if (!FormData.password.length < 8) {
+            newErrors = "Password must be at length minium 8 characters and above";
+        }
 
     const handleChange = (e) => {
         const {name, value} = e.target;
