@@ -9,11 +9,11 @@
 import { Link } from "react-router-dom";
 
 const listItems = [
-    {label: "signup", path: "/signup"},
-    {label: "login", path: "/login"},
-    {label: "about", path: "/about"},
-    {label: "home", path: "/"},
-    {label: "dashboard", path: "/dashboard"},
+    {label: "Signup", path: "/signup"},
+    {label: "Login", path: "/login"},
+    {label: "About", path: "/about"},
+    {label: "Home", path: "/"},
+    {label: "Dashboard", path: "/dashboard"},
    
 
 ]

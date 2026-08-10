@@ -7,7 +7,7 @@ function Signup() {
 
     const handleSubmit = () => {
 
-        navigate("/dashboard");
+        navigate("/questionnaire");
     };
     return (
        <>

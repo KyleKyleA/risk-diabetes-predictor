@@ -6,6 +6,7 @@
 // REGION IMPORTS
 import { useState } from 'react';
 import validator from 'validator';
+import QuestionPage from './QuestionPage';
 
 function SignUpForm({ onSuccess }) {
 
@@ -26,38 +27,44 @@ function SignUpForm({ onSuccess }) {
 
         } else if (!nameRegex.test(formData.name)) {
             newErrors.name = "Name can only contain letters and spaces";
-        } else if (!formData.name.length < 5) {
+        } else if (formData.name.length < 5) {
             newErrors.name = "Name must be at least 5 or more characters long";
         }
 
         // validate email 
         if (!formData.email.trim()) {
             newErrors.email = "Email is required";
-        } else if (!formData.email.length < 10) {
+        } else if (formData.email.length < 10) {
             newErrors.email = "Email must contain 10 or more characters along with the associate email (e.g google, hotmail outlook etc.)";
 
         } else if(!validator.isEmail(formData.email)) {
-            newErrors.email = "Invalid Email formate";
+            newErrors.email = "Invalid Email format";
         }
 
         // validate phone
         const phoneRegex = /^[0-9]+$/;
 
         if(!formData.phone.trim()) {
-            newErrors = "Phone number is required";
-        } else if (!formData.phone.length < 15) {
-            newErrors = "Phone number must be at least 15 characters long";
-        } else if (!validator.isPhone(formData.phone)) {
-            newErrors = "Phone number is invalid format";
-        } else if(!phoneRegex.test(FormData)) {
-            newErrors = "Phone number can only contain numerical values";
+            newErrors.phone = "Phone number is required";
+        } else if (formData.phone.length < 10) {
+            newErrors.phone = "Phone number must be at least 10 characters long";
+        } else if (!validator.isMobilePhone(formData.phone)) {
+            newErrors.phone = "Phone number is invalid format";
+        } else if(!phoneRegex.test(formData.phone)) {
+            newErrors.phone = "Phone number can only contain numerical values";
         }
 
         // validate password
         if (!formData.password.trim()) {
-            newErrors = "Password is required";
-        } else if (!formData.password.length < 8) {
-            newErrors = "Password must be at length minium 8 characters and above";
+            newErrors.password = "Password is required";
+        } else if (formData.password.length < 8) {
+            newErrors.password = "Password must be at length minium 8 characters and above";
+        }
+
+
+        // Validate date of birth
+        if (!formData.dob) {
+            newErrors.dob = "Date of birth is required";
         }
 
         return newErrors
@@ -88,9 +95,10 @@ function SignUpForm({ onSuccess }) {
         if (onSuccess) onSuccess(formData);
         };
 
-
+        
         if (isSubmitted) {
-            return <div>Redirecting to questionnaire page</div>
+
+            return <div>Redirecting to questionnaire page {QuestionPage}</div>
         }
 
     
@@ -102,39 +110,45 @@ function SignUpForm({ onSuccess }) {
         <>
 
         {/* Signup form */}
-        <div className="signup-form-container">
+        <div className="signup-form-container max-w-md mx-auto my-8 p-8 bg-white border border-gray-300 rounded-2xl shadow-lg">
+            <h2 className="text-2xl font-bold mb-6 text-grey-500 text-center">Signup </h2>
             <form className="flex flex-col items-center text-sm on" onSubmit={handleSubmit}>
-            <h2 className="">Sign Up</h2>
 
             <div className="">
                 <div className="w-full">
                     <label className="text-black block mb-1">Name</label>
                     <input className="rounded-lg border border-gray-300 bg-white px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-400" id="name" name="name" value={formData.name} onChange={handleChange} placeholder='enter name' required></input>
                 </div>
+                <br></br>
                 <div className="w-full">
                     <label className="text-black block mb-1">Email</label>
                     <input className="rounded-lg border border-gray-300 bg-white px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-400" id="email" name="email" value={formData.email} onChange={handleChange} placeholder='enter email'required></input>
                 </div>
+                <br></br>
+                {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
             </div>
             <div className="">
                 <div className="w-full">
                     <label className="text-black block mb-1">Phone: </label>
                     <input className="rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 text-sm font-normal text-gray-700 outline-none transition-all focus:shadow-soft-primary-outline focus:border-blue-400" id="phone" name="phone" value={formData.phone} onChange={handleChange} placeholder='enter phone number' required></input>
                 </div>
+                <br></br>
+                {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
             </div>
                 <div className="w-full">
                     <label className="text-black block mb-1">Date of Birth: </label>
-                    {/* */}
-                    <input className="flex flex-col items-center focus:shadow-soft-primary-outline dark:bg-gray-950 dark:placeholder:text-white/80 dark:text-white/80 text-sm leading-5.6 ease-soft block appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder" type="text" placeholder="Please select a date" id="dob" name="dob" value={formData.dob} onChange={handleChange} required></input>
+                    <input className="rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 text-sm font-normal text-gray-700 outline-none transition-all focus:shadow-soft-primary-outline focus:border-blue-400" type="date" placeholder="Please select a date" id="dob" name="dob" value={formData.dob} onChange={handleChange} required></input>
                 </div>
+                {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+                <br></br>
                 <div className="w-full">
-                    <label className="text-black block mb-1">Password: </label>
-                    <input className="rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 text-sm font-normal text-gray-700 outline-none transition-all focus:shadow-soft-primary-outline focus:border-blue-400" id="password" name="password" onChange={handleChange}  required></input>
+                    <label className="text-black block mb-1">Password </label>
+                    <input className="rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 text-sm font-normal text-gray-700 outline-none transition-all focus:shadow-soft-primary-outline focus:border-blue-400" type="password" id="password" name="password" value={formData.password} onChange={handleChange} placeholder='enter password' required></input>
                 </div>
-            
+                <br></br>
 
 
-            <button type="submit" className="px-6 py-2 rounded-md text-black font-semibold bg-gradient-to-r from blue-400 to black-500 hover:from-blue-500 hover:to-black-600 transition">SignUp</button>
+            <button type="submit" className="px-6 py-2 rounded-md text-black font-semibold bg-gradient-to-r from-blue-400 to purple-500 hover:from-blue-500 hover:to-purple-600 transition">SignUp</button>
             </form>
         </div>
         

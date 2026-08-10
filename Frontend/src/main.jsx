@@ -22,6 +22,7 @@ import Login from './views/Login.jsx'
 import Signup from './views/Signup.jsx'
 import NotFound from './views/NotFound.jsx'
 import Aup from './Components/Aup.jsx';
+import QuestionPage from './Components/QuestionPage';
 
 
 const router = createBrowserRouter(
@@ -35,6 +36,7 @@ const router = createBrowserRouter(
       <Route path="contact" element={<Contact />}/>
       <Route path="*" element={<NotFound />}/>
       <Route path="aup" element={<Aup />}/>
+      <Route path="/questionnaire" element={< QuestionPage />} />
 
     </Route>
   )
