@@ -92,17 +92,18 @@ function SignUpForm({ onSuccess }) {
         }
 
         setIsSubmitted(true);
-        if (onSuccess) onSuccess(formData);
-        };
-
         
+        setTimeout(() => {
+            if(onSuccess) onSuccess(formData);
+        }, 2000);
+
         if (isSubmitted) {
 
-            return <div>Redirecting to questionnaire page {QuestionPage}</div>
+            return <div>Redirecting to questionnaire page </div>
         }
 
     
-
+    }
 
 
     return (
