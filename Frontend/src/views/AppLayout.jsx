@@ -19,7 +19,7 @@ function AppLayout() {
         
 
 
-        <main className="w-full flex-1">
+        <main className="w-full flex-1 pt-24">
                     {<Outlet />}
         </main>
 

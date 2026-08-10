@@ -175,7 +175,7 @@ function ContactForm({onSuccess}) {
                 </div>
             </div>
 
-            <button type="submit" disabled={status === 'submitting'} className="mt-5 bg-violet-500 text-black h-12 w-32 px-4 rounded active:scale-95 transition" >Send Message
+            <button type="submit" disabled={status === 'submitting'} className="px-6 py-2 rounded-md text-black font-semibold bg-gradient-to-r from blue-400 to black-500 hover:from-blue-500 hover:to-black-600 transition h-12 w-32 px-4 rounded active:scale-95 transition" >Submit
             </button>
 
            

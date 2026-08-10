@@ -108,32 +108,33 @@ function SignUpForm({ onSuccess }) {
 
             <div className="">
                 <div className="w-full">
-                    <label className="">Name</label>
-                    <input className="" id="name" name="name" value={formData.name} onChange={handleChange} required></input>
+                    <label className="text-black block mb-1">Name</label>
+                    <input className="rounded-lg border border-gray-300 bg-white px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-400" id="name" name="name" value={formData.name} onChange={handleChange} placeholder='enter name' required></input>
                 </div>
                 <div className="w-full">
-                    <label className="">Email</label>
-                    <input className="" id="email" name="email" value={formData.email} onChange={handleChange} required></input>
+                    <label className="text-black block mb-1">Email</label>
+                    <input className="rounded-lg border border-gray-300 bg-white px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-400" id="email" name="email" value={formData.email} onChange={handleChange} placeholder='enter email'required></input>
                 </div>
             </div>
             <div className="">
                 <div className="w-full">
-                    <label className="">Phone</label>
-                    <input className="" id="phone" name="phone" value={formData.phone} onChange={handleChange} required></input>
+                    <label className="text-black block mb-1">Phone: </label>
+                    <input className="rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 text-sm font-normal text-gray-700 outline-none transition-all focus:shadow-soft-primary-outline focus:border-blue-400" id="phone" name="phone" value={formData.phone} onChange={handleChange} placeholder='enter phone number' required></input>
                 </div>
             </div>
                 <div className="w-full">
-                    <label className="">Date of Birth</label>
-                    <input className="" id="dob" name="dob" value={formData.dob} onChange={handleChange} required></input>
+                    <label className="text-black block mb-1">Date of Birth: </label>
+                    {/* */}
+                    <input className="flex flex-col items-center focus:shadow-soft-primary-outline dark:bg-gray-950 dark:placeholder:text-white/80 dark:text-white/80 text-sm leading-5.6 ease-soft block appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder" type="text" placeholder="Please select a date" id="dob" name="dob" value={formData.dob} onChange={handleChange} required></input>
                 </div>
                 <div className="w-full">
-                    <label className="">Password</label>
-                    <input className="" id="password" name="password" onChange={handleChange}  required></input>
+                    <label className="text-black block mb-1">Password: </label>
+                    <input className="rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 text-sm font-normal text-gray-700 outline-none transition-all focus:shadow-soft-primary-outline focus:border-blue-400" id="password" name="password" onChange={handleChange}  required></input>
                 </div>
             
 
 
-            <button type="submit" className="">SignUp</button>
+            <button type="submit" className="px-6 py-2 rounded-md text-black font-semibold bg-gradient-to-r from blue-400 to black-500 hover:from-blue-500 hover:to-black-600 transition">SignUp</button>
             </form>
         </div>
         
