@@ -149,7 +149,7 @@ function SignUpForm({ onSuccess }) {
                 <br></br>
 
 
-            <button type="submit" className="px-6 py-2 rounded-md text-black font-semibold bg-gradient-to-r from-blue-400 to purple-500 hover:from-blue-500 hover:to-purple-600 transition">SignUp</button>
+            <button type="submit" className="px-6 py-2 rounded-md text-black font-semibold bg-gradient-to-r from-blue-400 to purple-500 hover:from-blue-500 hover:to-purple-600 transition">Signup</button>
             </form>
         </div>
         

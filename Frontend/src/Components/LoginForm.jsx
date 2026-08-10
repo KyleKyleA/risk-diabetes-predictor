@@ -2,7 +2,7 @@
 // File-Name: Login.jsx
 // Description: This component will handle the login components of the app.
 import {useState} from 'react';
-import validator from 'validator';
+
 
 function LoginForm({onSuccess}) {
 
@@ -58,14 +58,14 @@ function LoginForm({onSuccess}) {
 
         if (!validateLogin()) return;
 
-        setLoading(true);
+        setIsLogged(true);
 
 
     try {
         const response = await fetch('/api/login', {
             method: 'POST',
-            header: { 'Content-Type': 'application/json'},
-            body: JSON.stringify({formData})
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify(formData)
 
         });
 
@@ -84,7 +84,7 @@ function LoginForm({onSuccess}) {
     } catch (err) {
         setErrors("Network error. Please try again.");
     } finally {
-        setLoading(false);
+        setIsLogged(false);
     }
 };
 
@@ -92,24 +92,24 @@ function LoginForm({onSuccess}) {
 
         <>
         <div className="login-form-container max-w-md mx-auto my-8 p-8 bg-white border border-gray-300 rounded-2xl shadow-lg">
-            <h2 className="">Login</h2>
-            <form className="flex flex-col items-center text-sm on">
+            <h2 className="font-bold text-center">Login</h2>
+            <form className="flex flex-col items-center text-sm on" onSubmit={handleSubmit}>
     
                 <div className="w-full">
                     <label className="text-black block mb-1">Email</label>
-                    <input className="rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 text-sm font-normal text-gray-700 outline-none transition-all focus:shadow-soft-primary-outline focus:border-blue-400" type="email" id="email" value={formData.email} onChange={handleChange} placeholder="Enter Email" required></input>
+                    <input className="rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 text-sm font-normal text-gray-700 outline-none transition-all focus:shadow-soft-primary-outline focus:border-blue-400" type="email" id="email"name="email" value={formData.email} onChange={handleChange} placeholder="Enter Email" required></input>
                 </div>
                 {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
                 <br></br>
 
                 <div className="w-full">
                     <label className="text-black block mb-1">Password</label>
-                    <input className="rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 text-sm font-normal text-gray-700 outline-none transition-all focus:shadow-soft-primary-outline focus:border-blue-400" type="password" id="password" value={formData.password} onChange={handleChange} placeholder="Enter Password" required></input>
+                    <input className="rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 text-sm font-normal text-gray-700 outline-none transition-all focus:shadow-soft-primary-outline focus:border-blue-400" type="password" id="password" name="password" value={formData.password} onChange={handleChange} placeholder="Enter Password" required></input>
                 </div>
-                {errors.password && <p className="text-red-500 text-xs mt-1"></p>}
+                {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
                 <br></br>
 
-                <button type="submit" disabled={isLogged} className="px-6 py-2 rounded-md text-black font-semibold bg-gradient-to-r from-blue-400 to purple-500 hover:from-blue-500 hover:to-purple-600 transition">Login</button>
+                <button type="submit" disabled={isLogged} className="px-6 py-2 rounded-md text-black font-semibold bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-500 hover:to-purple-600 transition">{isLogged ? "Logging in..." : "Login"}</button>
             </form>
             </div>
 
