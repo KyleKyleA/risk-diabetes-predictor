@@ -73,7 +73,7 @@ function QuestionPage() {
                     </div>
                     <br></br>
                     <div className="">
-                        <h2 className="">
+                        <h2 className="">Exercise</h2>
                         <select name="exercise" onChange={handleChange}>
                             <option value="">Select</option>
                             <option value="Sedentary">sedentary (Little to no exercise)</option>
@@ -82,7 +82,7 @@ function QuestionPage() {
                             <option value="Active">Active (4-5+ days a week)</option>
                             <option value="vigorous">Vigorous / Daily structured workouts</option>
                         </select>
-                        </h2>
+                        
                          <button onClick={() => setCurrentStep(currentStep + 1)}>Next</button>
                     </div>
                 
@@ -92,9 +92,54 @@ function QuestionPage() {
 
         {/* History */}
         if (currentStep === 3) {
-            
+            return(
+            <>
+                <h2 className="text-black text-l">History</h2>
+                <br></br>
+                <label className="">Family History</label>
+                <input className="" type="text" id="family history" name="family history" 
+                placeholder="explain shortly about family history and genetics if any 
+                relatives or family members had diabetes in the past" onChange={handleChange} value={familyHistory} required></input>
+                <br></br>
+                <div className="">
+                    <label className="flex flex-col gap 2">Diabetes history</label>
+                    <p className="">Have you ever experienced gestational diabetes or temporary high blood sugar in the past? </p>
+                    <input className="px-4 py-2 border rounded-md hover:bg-blue-50 focus:ring-2 focus:ring-blue-500" type="button" onClick={() => handleChange('hasHistory', true)} required>Yes</input>
+                    <input className="px-4 py-2 border rounded-md hover:bg-blue-50 focus:ring-2 focus:ring-blue-500" type="button" onClick={() => handleChange('hasHistory', false )} required>No</input>
+                </div>
+                <div className="">
+                    <label className="">Symptoms</label>
+                    <p className="">Have you experienced hallmark symptoms like excessive thirst, frequent urination, unusual fatigue, or blurred vision? Describe any symptoms and how long you've noticed them</p>
+                    <textarea id="symptoms" name="symptoms" className="" placeholder="Please enter your answer below" rows={4} onChange={handleChange} value={formData.symptoms} required></textarea>
+                </div>
+                <button onClick={() => setCurrentStep(currentStep + 1)}>Next</button>
+            </>
+            )
 
         }
+
+
+        if (currentStep === 4 ) {
+
+            return (
+                <>
+                    <div className="">
+                        <label className="">sleep</label>
+                        <p className="">On average, how many hours of sleep do you get per night.</p>
+                        <input className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 text-sm" type="number" id="sleepHours" name="sleepHours" min="0" max="24" step="0.5" value={formData.sleep || ''} onChange={handleChange} placeholder="e.g 7.5hrs" required></input>
+                    </div>
+                    <br></br>
+                    <div className="">
+                        <label className="">Diabetes Type</label>
+                        <p className="">If applicable, select your diagnosed diabetes type:</p>
+                        <select id="diabetesType" name="diabetesType" required></select>
+                    </div>
+                
+                <button onClick={() => setCurrentStep(currentStep + 1)}>Next</button>
+                </>
+            )
+        } 
+
 
         
 
