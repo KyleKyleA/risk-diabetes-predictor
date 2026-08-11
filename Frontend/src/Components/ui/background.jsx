@@ -203,13 +203,14 @@ export const FluidParticlesBackground = ({
     <div
       className={cn(
         "fixed inset-0 w-screen h-screen overflow-hidden -z-10",
-        "bg-black",
+        "bg-white dark:bg-black",
         className,
       )}
     >
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
 
       <div className="relative z-10 w-full h-full flex items-center justify-center">
+        {children}
       </div>
     </div>
   );
