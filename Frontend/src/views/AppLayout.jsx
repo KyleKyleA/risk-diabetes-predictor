@@ -6,7 +6,7 @@ import { FluidParticlesBackground }  from "../Components/ui/background.jsx";
 import { Outlet, Link } from "react-router-dom";
 import NavBar from "../Components/NavBar";
 import Aup from "../Components/Aup";
-import PrivacyPolicy from "../Components/Policies"; 
+import PrivacyPolicy from "../Components/Terms&Conditions.jsx"; 
 
 function AppLayout() {
     return (

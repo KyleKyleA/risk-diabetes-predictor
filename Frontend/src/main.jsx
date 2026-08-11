@@ -23,6 +23,7 @@ import Signup from './views/Signup.jsx'
 import NotFound from './views/NotFound.jsx'
 import Aup from './Components/Aup.jsx';
 import QuestionPage from './Components/QuestionPage';
+import TermsConditions from './Components/Terms&Conditions';
 
 
 const router = createBrowserRouter(
