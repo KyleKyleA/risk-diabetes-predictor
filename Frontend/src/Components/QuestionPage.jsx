@@ -82,36 +82,36 @@ function QuestionPage() {
 
         const prevStep = () => {
             setCurrentStep((prev) => Math.max(0, prev -1));
-        }
+        };
 
         // basic information based on my form data
          return (
             <form onSubmit={handleSubmit} className="">
-                if (currentStep === 0) {
+                {currentStep === 0 && (
            
                 
                     <div>
-                        <h2 className="">
+                        <h2 className="text-blue block mb-1">
                             Q1. Basic Information
                         </h2>
-                        <label className="">Name</label>
+                        <label className="text-black block mb-1">Name</label>
                         <input className="" type="text" id="name" name="name" value={formData.name} onChange={handleChange} placeholder="Your Name"required></input>
-                        <button onClick={nextStep} className="">next step</button>
+                        <button type="button" onClick={nextStep} className="">next step</button>
                     </div>
 
             
             )}        
 
         {/* Diet and lifestyle questions  */}
-        if (currentStep === 1) {
+        {currentStep === 1 && (
            
                 <>
                     <div>
-                        <h2 className="">
+                        <h2 className="text-black block mb-1 text-center">
                             Q2. diet
                         </h2>
-                        <label className="">Diet Preference</label>
-                        <select name="diet" onChange={handleChange}>
+                        <label className="text-black block mb-1">Diet Preference</label>
+                        <select name="diet" onChange={handleChange} value={formData.diet}>
                             <option value="">Select</option>
                             <option value="vegan">Vegan</option>
                             <option value="omnivore">Omnivore</option>
@@ -121,8 +121,8 @@ function QuestionPage() {
                     </div>
                     <br></br>
                     <div className="">
-                        <h2 className="">Exercise</h2>
-                        <select name="exercise" onChange={handleChange}>
+                        <h2 className="text-black block mb-1">Exercise</h2>
+                        <select name="exercise" onChange={handleChange} value={formData.exercise}>
                             <option value="">Select</option>
                             <option value="Sedentary">sedentary (Little to no exercise)</option>
                             <option value="Light">Light (1-2 days/week) </option>
@@ -131,26 +131,27 @@ function QuestionPage() {
                             <option value="vigorous">Vigorous / Daily structured workouts</option>
                         </select>
                          <button type="button" onClick={prevStep} className="px-4 py-2 border rounded-md">Back</button>
-                         <button onClick={() => setCurrentStep(currentStep + 1)}>Next</button>
+                         <button type="button" onClick={() => setCurrentStep(currentStep + 1)}>Next</button>
                     </div>
                 
                 </>
+        
             )
         }
 
         {/* History */}
-        if (currentStep === 2) {
-            return (
+        {currentStep === 2 && (
+            <>
             
                 <h2 className="text-black text-l">History</h2>
                 <br></br>
-                <label className="">Family History</label>
+                <label className="text-black block mb-1">Family History</label>
                 <input className="" type="text" id="familyHistory" name="familyHistory" 
                 placeholder="explain shortly about family history and genetics if any 
                 relatives or family members had diabetes in the past" onChange={handleChange} value={formData.familyHistory} required></input>
                 <br></br>
                 <div className="">
-                    <label className="flex flex-col gap-2">Diabetes history</label>
+                    <label className="flex flex-col gap-2 text-black block mb-1">Diabetes history</label>
                     <p className="">Have you ever experienced gestational diabetes or temporary high blood sugar in the past? </p>
                    <button type="button" onClick={() => handleCustomChange("diabetesHistory", "yes")}className={`px-4 py-2 border rounded-md ${
                    formData.diabetesHistory === "yes" ? "bg-blue-600 text-white" : "hover:bg-gray-100"}`}> Yes </button>
@@ -158,13 +159,13 @@ function QuestionPage() {
                    formData.diabetesHistory === "no" ? "bg-blue-600 text-white" : "hover:bg-gray-100" }`}> No </button>
                 </div>
                 <div className="">
-                    <label className="">Symptoms</label>
+                    <label className="text-black block mb-1">Symptoms</label>
                     <p className="">Have you experienced hallmark symptoms like excessive thirst, frequent urination, unusual fatigue, or blurred vision? Describe any symptoms and how long you've noticed them</p>
                     <textarea id="symptoms" name="symptoms" className="" placeholder="Please enter your answer below" rows={4} onChange={handleChange} value={formData.symptoms} required></textarea>
                 </div>
                  <button type="button" onClick={prevStep} className="px-4 py-2 border rounded-md">Back</button>
-                <button onClick={() => setCurrentStep(currentStep + 1)}>Next</button>
-            
+                <button type="button" onClick={() => setCurrentStep(currentStep + 1)}>Next</button>
+            </>
             )
         }
 
@@ -172,9 +173,9 @@ function QuestionPage() {
         
 
 
-        if (currentStep === 3) {
+        { currentStep === 3 && (
 
-            return (
+           
                 <>
                     <div className="">
                         <label className="">sleep</label>
@@ -183,7 +184,7 @@ function QuestionPage() {
                     </div>
                     <br></br>
                     <div className="">
-                        <label className="">Diabetes Type</label>
+                        <label className="text-black block mb-1">Diabetes Type</label>
                         <p className="">If applicable, select your diagnosed diabetes type:</p>
                         <select id="diabetesType" name="diabetesType" onChange={handleChange} value={formData.diabetesType} required>
                             <option value="">Select diagnosis type</option>
@@ -201,8 +202,14 @@ function QuestionPage() {
                 </div>
                
                 </>
+        )
+    }
+        
             </form>
             )
+            
+        }
+        
         
 
     
