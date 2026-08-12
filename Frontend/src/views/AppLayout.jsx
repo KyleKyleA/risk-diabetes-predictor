@@ -6,7 +6,7 @@ import { FluidParticlesBackground }  from "../Components/ui/background.jsx";
 import { Outlet, Link } from "react-router-dom";
 import NavBar from "../Components/NavBar";
 import Aup from "../Components/Aup";
-import PrivacyPolicy from "../Components/Terms&Conditions.jsx"; 
+import TermsConditions from "../Components/TermsConditions.jsx";
 
 function AppLayout() {
     return (
@@ -29,8 +29,8 @@ function AppLayout() {
                     <Link to="/aup" className="hover:text-white underline">
                         Acceptable Use Policy
                     </Link>
-                    <Link to="/privacy-policy" className="hover:text-white underline">
-                        Privacy Policy
+                    <Link to="/terms" className="hover:text-white underline">
+                        Terms and conditions
                     </Link>
         </footer>
         </div>

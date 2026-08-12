@@ -14,6 +14,7 @@ import Signup from './views/Signup.jsx'
 import NotFound from './views/NotFound.jsx'
 import Aup from './Components/Aup.jsx';
 
+
 import { FluidParticlesBackground } from "./Components/ui/background.jsx";
 // views built later
 // import AppLayout from './views/AppLayout'

@@ -23,7 +23,7 @@ import Signup from './views/Signup.jsx'
 import NotFound from './views/NotFound.jsx'
 import Aup from './Components/Aup.jsx';
 import QuestionPage from './Components/QuestionPage';
-import TermsConditions from './Components/Terms&Conditions';
+import TermsConditions from './Components/TermsConditions';
 
 
 const router = createBrowserRouter(
@@ -38,6 +38,7 @@ const router = createBrowserRouter(
       <Route path="*" element={<NotFound />}/>
       <Route path="aup" element={<Aup />}/>
       <Route path="/questionnaire" element={< QuestionPage />} />
+      <Route path="terms" element={< TermsConditions/>}></Route>
 
     </Route>
   )
