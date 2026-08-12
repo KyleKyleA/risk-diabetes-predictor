@@ -7,11 +7,21 @@ from pydantic import BaseModel
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 from . import models, schemas
-from .database import SessionLocal
+from ..database import SessionLocal
+import bcrypt
+from ..security import create_access_token
 
-app = APIRouter()
+router = APIRouter(tags=["auth"])
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
+
+
+def hash_password(password: str) -> str:
+    return bcrypt.hashpw(password.encode("utf-8")[:72], bcrypt.gensalt()).decode("utf-8")
+
+
+def verify_password(password: str, hashed: str) -> bool:
+    return bcrypt.checkpw(password.encode("utf8")[:72], hashed.encode("utf-8"))
 
 def get_db():
     db = SessionLocal()
@@ -21,7 +31,7 @@ def get_db():
         db.close()
         
         
-@app.post("/signup/", response_model=schemas.UserResponse)
+@router.post("/signup/", response_model=schemas.UserResponse)
 def signup(user: schemas.UserCreate, db: Session = Depends(get_db)):
     # checks if the user has already signed up for the app
     db_user = db.query(models.User).filter(models.User.email == user.email).first()
