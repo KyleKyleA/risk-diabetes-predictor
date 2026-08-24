@@ -3,15 +3,14 @@
 # Description: Component endpoint for the login endpoint using jwt tokens and sessions
 
 # Region Imports
-from fastapi import FastAPI, Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi import Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from datetime import datetime, timedelta, timezone
-from pydantic import BaseModel
-from .database import SessionLocal
-import os 
+from ..database import SessionLocal
+import os
 from passlib.context import CryptContext
-from . import models, schemas
+from app import models
 from sqlalchemy.orm import Session
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
