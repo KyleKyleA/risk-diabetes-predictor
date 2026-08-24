@@ -8,23 +8,14 @@ from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 from . import models, schemas
 from ..database import SessionLocal
-import bcrypt
 from ..security import create_access_token
 from fastapi.security import OAuth2PasswordRequestForm
-from jose import jwt, JWTError
-from datetime import datetime, timedelta
+
 
 router = APIRouter(tags=["auth"])
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
-
-def hash_password(password: str) -> str:
-    return bcrypt.hashpw(password.encode("utf-8")[:72], bcrypt.gensalt()).decode("utf-8")
-
-
-def verify_password(password: str, hashed: str) -> bool:
-    return bcrypt.checkpw(password.encode("utf8")[:72], hashed.encode("utf-8"))
 
 def get_db():
     db = SessionLocal()
@@ -54,38 +45,18 @@ def signup(user: schemas.UserCreate, db: Session = Depends(get_db)):
 
 
 # Login endpoint api
-
-# Configuration 
-# using JWT and Session tokens
-SECRET_KEY = "1234" # for example along with that be tested with docker
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
-
-# Retrieve user from database
-
-
-# Verification and validation
-def verify_password(password: str, hashed: str) -> bool:
-    return bcrypt.checkpw(password.encode("utf8")[:72], hashed.encode("utf-8"))
-
-def create_access_token(data: dict):
-    to_encode = data.copy()
-    expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    to_encode.update({"exp": expire})
-    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
-
 @router.post("/token")
-async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
+async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     # database 
-    user = load.user(data.username)
-    if not user or not verify_password(form_data.password, user["hashed_password"]):
+    user = db.query(models.User).filter(models.User.username == form_data.username).first()
+    if not user or not pwd_context.verify(form_data.password, user.hashed_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect user name or password",
+            detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Bearer"},
             
         )
-    access_token = create_access_token(data={"sub": user["username"]})
+    access_token = create_access_token(data={"sub": user.username})
     return {"access_token": access_token, "token_type": "bearer"}
         
         
