@@ -8,7 +8,7 @@ from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 from . import models, schemas
 from ..database import SessionLocal
-from ..security import create_access_token
+from .security import create_access_token
 from fastapi.security import OAuth2PasswordRequestForm
 
 
