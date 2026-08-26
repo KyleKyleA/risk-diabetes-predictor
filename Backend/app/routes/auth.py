@@ -28,9 +28,12 @@ def get_db():
 @router.post("/signup/", response_model=schemas.UserResponse)
 def signup(user: schemas.UserCreate, db: Session = Depends(get_db)):
     # checks if the user has already signed up for the app
-    db_user = db.query(models.User).filter(models.User.email == user.email).first()
+    db_user = db.query(models.User).filter(
+        (models.User.email == user.email) | (models.User.username == user.username)
+    ).first()
     if db_user:
-        raise HTTPException(status_code=400, detail="Email is already registered")
+        detail = "Email is already registered" if db_user.email == user.email else "Username is already taken"
+        raise HTTPException(status_code=400, detail=detail)
     
     # hash password to prevent any hacking
     hashed_password = pwd_context.hash(user.password)
