@@ -6,7 +6,7 @@ from fastapi import APIRouter, HTTPException, Depends, status
 from pydantic import BaseModel
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
-from . import models, schemas
+from . import models, schema
 from ..database import SessionLocal
 from .security import create_access_token
 from fastapi.security import OAuth2PasswordRequestForm
@@ -25,8 +25,8 @@ def get_db():
         db.close()
         
         
-@router.post("/signup/", response_model=schemas.UserResponse)
-def signup(user: schemas.UserCreate, db: Session = Depends(get_db)):
+@router.post("/signup/", response_model=schema.UserResponse)
+def signup(user: schema.UserCreate, db: Session = Depends(get_db)):
     # checks if the user has already signed up for the app
     db_user = db.query(models.User).filter(
         (models.User.email == user.email) | (models.User.username == user.username)
