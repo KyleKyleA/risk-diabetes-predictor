@@ -91,7 +91,7 @@ function LoginForm({onSuccess}) {
     return (
 
         <>
-        <div className="login-form-container max-w-md mx-auto my-8 p-8 bg-white border border-gray-300 rounded-2xl shadow-lg">
+        <div className="login-form-container max-w-md mx-auto my-8 p-8 rounded-2xl bg-grey border border-[var(--border)] shadow-2xl shadow-black/50">
             <h2 className="font-bold text-center">Login</h2>
             <form className="flex flex-col items-center text-sm on" onSubmit={handleSubmit}>
     
@@ -109,7 +109,7 @@ function LoginForm({onSuccess}) {
                 {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
                 <br></br>
 
-                <button type="submit" disabled={isLogged} className="px-6 py-2 rounded-md text-black font-semibold bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-500 hover:to-purple-600 transition">{isLogged ? "Logging in..." : "Login"}</button>
+                <button type="submit" disabled={isLogged} className="px-6 py-2 rounded-md text-black font-semibold bg-gradient-to-r from blue-400 to black-500 hover:from-blue-500 hover:to-black-600 transition h-12 w-32 px-4 rounded active:scale-95 transition">{isLogged ? "Logging in..." : "Login"}</button>
             </form>
             </div>
 

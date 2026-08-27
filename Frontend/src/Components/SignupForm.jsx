@@ -111,7 +111,7 @@ function SignUpForm({ onSuccess }) {
         <>
 
         {/* Signup form */}
-        <div className="signup-form-container max-w-md mx-auto my-8 p-8 bg-white border border-gray-300 rounded-2xl shadow-lg">
+        <div className="signup-form-container max-w-md mx-auto my-8 p-8 rounded-2xl bg-grey border-border-[var(--border)] shadow-2xl shadow-black/50">
             <h2 className="text-2xl font-bold mb-6 text-grey-500 text-center">Signup </h2>
             <form className="flex flex-col items-center text-sm on" onSubmit={handleSubmit}>
 
@@ -130,14 +130,14 @@ function SignUpForm({ onSuccess }) {
             </div>
             <div className="">
                 <div className="w-full">
-                    <label className="text-black block mb-1">Phone: </label>
+                    <label className="text-black block mb-1">Phone </label>
                     <input className="rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 text-sm font-normal text-gray-700 outline-none transition-all focus:shadow-soft-primary-outline focus:border-blue-400" id="phone" name="phone" value={formData.phone} onChange={handleChange} placeholder='enter phone number' required></input>
                 </div>
                 <br></br>
                 {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
             </div>
                 <div className="w-full">
-                    <label className="text-black block mb-1">Date of Birth: </label>
+                    <label className="text-black block mb-1">Date of Birth </label>
                     <input className="rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 text-sm font-normal text-gray-700 outline-none transition-all focus:shadow-soft-primary-outline focus:border-blue-400" type="date" placeholder="Please select a date" id="dob" name="dob" value={formData.dob} onChange={handleChange} required></input>
                 </div>
                 {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
@@ -149,7 +149,7 @@ function SignUpForm({ onSuccess }) {
                 <br></br>
 
 
-            <button type="submit" className="px-6 py-2 rounded-md text-black font-semibold bg-gradient-to-r from-blue-400 to purple-500 hover:from-blue-500 hover:to-purple-600 transition">Signup</button>
+            <button type="submit" className="px-6 py-2 rounded-md text-black font-semibold bg-gradient-to-r from blue-400 to black-500 hover:from-blue-500 hover:to-black-600 transition h-12 w-32 px-4 rounded active:scale-95 transition">Signup</button>
             </form>
         </div>
         
