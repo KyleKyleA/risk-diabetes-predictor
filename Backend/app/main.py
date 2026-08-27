@@ -5,9 +5,11 @@ from fastapi import FastAPI, Request
 # from .routes import auth
 from fastapi.responses import JSONResponse
 from .middleware.rateLimit import RateLimiterStore
+from .middleware.requestLogger import RequestLoginMiddleware
 import time
 
 app = FastAPI()
+app.add_middleware(RequestLoginMiddleware)
 # app.include_router(auth.router)
 
 
@@ -22,7 +24,7 @@ async def rate_limit_middleware(request: Request, call_next):
         Adds standard rate limit headers to every response
     """
     
-    client_ip = request.client.host
+    client_ip = request.client.host if request.client else "unknown"
     bucket = limiter.get_bucket(client_ip)
     
     if not bucket.allow_request():

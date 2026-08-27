@@ -6,13 +6,12 @@
 // REGION IMPORTS
 import { useState } from 'react';
 import validator from 'validator';
-import { supabase } from './supabaseClient'
+import { supabase } from '../utils/supabaseClient'
 
 
 function SignUpForm({ onSuccess }) {
 
     const [formData, setFormData] = useState({name: "", email: "", phone: "", dob: "", password: ""});
-
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [errors, setErrors] = useState({});
     const [submitError, setSubmitError] = useState("")
@@ -79,6 +78,7 @@ function SignUpForm({ onSuccess }) {
         if(errors[name]) {
             setErrors((prev) => ({ ...prev, [name]: ""}));
         }
+        setSubmitError("")
 
     };
 
@@ -94,10 +94,21 @@ function SignUpForm({ onSuccess }) {
         }
 
         try {
-            const { data, error } = await supabase
+            const { data: authData, error: authError } = await supabase.auth.signUp({
+                email: formData.email,
+                password: formData.password,
+            })
+
+            if (authError) {
+                setSubmitError(authError.message);
+                return;
+            }
+
+            const {data, error} = await supabase
             .from('users')
             .insert([
                 {
+                    user_id: authData.user.id,
                     name: formData.name,
                     email: formData.email,
                     phone: formData.phone, 
@@ -118,17 +129,17 @@ function SignUpForm({ onSuccess }) {
         setIsSubmitted(true);
         
         setTimeout(() => {
-            if(onSuccess) onSuccess(formData);
+            if(onSuccess) onSuccess(data ? data[0] : formData);
         }, 2000);
 
         } catch (err) {
-            setErrors("Unexpected error occurred while signing up.");
+            setSubmitError("Unexpected error occurred while signing up.");
         }
     };
 
         if (isSubmitted) {
 
-            return <div>Redirecting to questionnaire page </div>
+            return <div className='flex justify-center items-center min-h-[300px] text-lg font-semibold text-gray-800'>Redirecting to questionnaire page </div>
         }
 
 
@@ -139,14 +150,21 @@ function SignUpForm({ onSuccess }) {
         <>
 
         {/* Signup form */}
-        <div className="signup-form-container max-w-md mx-auto my-8 p-8 rounded-2xl bg-grey-50 border-border-[var(--border)] shadow-2xl shadow-black/50">
-            <h2 className="text-2xl font-bold mb-6 text-grey-500 text-center">Signup </h2>
-            <form className="flex flex-col items-center text-sm on" onSubmit={handleSubmit}>
+        <div className="signup-form-container max-w-md mx-auto my-8 p-8 rounded-2xl bg-gray-50 shadow-2xl shadow-black/50">
+        <h2 className="text-2xl font-bold mb-6 text-gray-500 text-center">Signup </h2>
+
+            {submitError && (
+                <div className="mb-4 text-xs font-semibold text-red-600 bg-red-100 p-2.5 rounded-lg border border-red-200 text-center">
+                    {submitError}
+                </div>
+            )}
+            <form className="flex flex-col items-center text-sm" onSubmit={handleSubmit}>
 
             <div className="">
                 <div className="w-full">
                     <label className="text-black block mb-1">Name</label>
                     <input className="rounded-lg border border-gray-300 bg-white px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-400" id="name" name="name" value={formData.name} onChange={handleChange} placeholder='enter name' required></input>
+                    {errors.name && <p className='text-red-500 text-xs mt-1'>{errors.name}</p>}
                 </div>
                 <br></br>
                 <div className="w-full">
@@ -173,11 +191,12 @@ function SignUpForm({ onSuccess }) {
                 <div className="w-full">
                     <label className="text-black block mb-1">Password </label>
                     <input className="rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 text-sm font-normal text-gray-700 outline-none transition-all focus:shadow-soft-primary-outline focus:border-blue-400" type="password" id="password" name="password" value={formData.password} onChange={handleChange} placeholder='enter password' required></input>
+                    {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
                 </div>
                 <br></br>
 
 
-            <button type="submit" className="px-6 py-2 rounded-md text-black font-semibold bg-gradient-to-r from blue-400 to black-500 hover:from-blue-500 hover:to-black-600 transition h-12 w-32 px-4 rounded active:scale-95 transition">Signup</button>
+            <button type="submit" className="text-black font-semibold bg-gradient-to-r from-blue-400 to-gray-800 hover:from-blue-500 hover:to-gray-900 transition h-12 w-32 rounded-md active:scale-95">Signup</button>
             </form>
         </div>
         
