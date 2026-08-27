@@ -6,6 +6,7 @@
 // REGION IMPORTS
 import { useState } from 'react';
 import validator from 'validator';
+import { supabase } from './supabaseClient'
 
 
 function SignUpForm({ onSuccess }) {
@@ -80,7 +81,7 @@ function SignUpForm({ onSuccess }) {
 
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
 
         e.preventDefault();
         const newErrors = validateSignUp();
@@ -91,19 +92,45 @@ function SignUpForm({ onSuccess }) {
             return;
         }
 
+        try {
+            const { data, error } = await supabase
+            .from('users')
+            .insert([
+                {
+                    name: formData.name,
+                    email: formData.email,
+                    phone: formData.phone, 
+                    dob: formData.dob,
+                }
+            ])
+            .select();
+
+        if (error) {
+            if (error.code === '23505') {
+                setErrors("An account with this email already has been registered");
+            } else {
+                setErrors(error.message);
+            }
+            return;
+        }
+
         setIsSubmitted(true);
         
         setTimeout(() => {
             if(onSuccess) onSuccess(formData);
         }, 2000);
 
+        } catch (err) {
+            setErrors("Unexpected error occurred while signing up.");
+        }
+    };
+
         if (isSubmitted) {
 
             return <div>Redirecting to questionnaire page </div>
         }
 
-    
-    }
+
 
 
     return (
