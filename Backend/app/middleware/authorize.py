@@ -1,8 +1,13 @@
+# Author: Kyle Angeles
+# File-Name: authorize.py
+# Description: This components acts like a RBAC where a user can access that part of the application
+
 from fastapi import FastAPI, Request, HTTPException, Depends
 from fastapi.responses import JSONResponse
 from starlette.middleware.authentication import AuthenticationMiddleware
 from starlette.authentication import AuthCredentials, AuthenticationBackend, SimpleUser, UnauthenticatedUser
 from starlette.middleware.base import BaseHTTPMiddleware
+
 
 app = FastAPI()
 

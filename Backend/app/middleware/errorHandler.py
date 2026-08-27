@@ -1,3 +1,7 @@
+#Author: Kyle Angeles
+#File-Name: errorHandler.py 
+# Description: This component handles the error of the app but in the backend side of the app it will give a status 500 code
+# through requests 
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 

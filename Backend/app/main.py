@@ -1,3 +1,6 @@
+# Author: Kyle Angeles
+# File-Name: main.py
+# This components handles everything for the backend -> rate limit, security, and more 
 from fastapi import FastAPI, Request
 # from .routes import auth
 from fastapi.responses import JSONResponse
