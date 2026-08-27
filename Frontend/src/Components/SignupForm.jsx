@@ -15,6 +15,7 @@ function SignUpForm({ onSuccess }) {
 
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [errors, setErrors] = useState({});
+    const [submitError, setSubmitError] = useState("")
 
     const validateSignUp = () => {
         const newErrors = {};
@@ -107,9 +108,9 @@ function SignUpForm({ onSuccess }) {
 
         if (error) {
             if (error.code === '23505') {
-                setErrors("An account with this email already has been registered");
+                setSubmitError("An account with this email already has been registered");
             } else {
-                setErrors(error.message);
+                setSubmitError(error.message);
             }
             return;
         }
@@ -138,7 +139,7 @@ function SignUpForm({ onSuccess }) {
         <>
 
         {/* Signup form */}
-        <div className="signup-form-container max-w-md mx-auto my-8 p-8 rounded-2xl bg-grey border-border-[var(--border)] shadow-2xl shadow-black/50">
+        <div className="signup-form-container max-w-md mx-auto my-8 p-8 rounded-2xl bg-grey-50 border-border-[var(--border)] shadow-2xl shadow-black/50">
             <h2 className="text-2xl font-bold mb-6 text-grey-500 text-center">Signup </h2>
             <form className="flex flex-col items-center text-sm on" onSubmit={handleSubmit}>
 
@@ -167,7 +168,7 @@ function SignUpForm({ onSuccess }) {
                     <label className="text-black block mb-1">Date of Birth </label>
                     <input className="rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 text-sm font-normal text-gray-700 outline-none transition-all focus:shadow-soft-primary-outline focus:border-blue-400" type="date" placeholder="Please select a date" id="dob" name="dob" value={formData.dob} onChange={handleChange} required></input>
                 </div>
-                {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+                {errors.dob && <p className="text-red-500 text-xs mt-1">{errors.dob}</p>}
                 <br></br>
                 <div className="w-full">
                     <label className="text-black block mb-1">Password </label>
