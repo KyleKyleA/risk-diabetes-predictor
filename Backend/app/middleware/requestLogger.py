@@ -5,7 +5,7 @@ from starlette.middleware.base import BaseHTTPMiddleware
 
 logger = logging.getLogger("api")
 
-class RequestLogginMiddleware(BaseHTTPMiddleware):
+class RequestLoginMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request, call_next):
         start_time = time.perf_counter()
         

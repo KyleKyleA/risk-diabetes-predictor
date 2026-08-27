@@ -21,7 +21,7 @@ class TokenBucket:
     
     def __init__(self, max_tokens: int, refill_rate: int, interval: float):
         
-        assert max_tokens > 0, "max_tokens always must be postive"
+        assert max_tokens > 0, "max_tokens always must be positive"
         assert refill_rate > 0
         assert interval > 0
         
@@ -65,7 +65,7 @@ class TokenBucket:
     
     def get_remaining(self) -> int:
         """
-            Return the number of avaliable tokens
+            Return the number of available tokens
         """
         with self.lock:
             self._refill()
@@ -85,7 +85,7 @@ class RateLimiterStore:
     """
         Manages per user Token buckets 
         
-        each client key trackers per IP address or per authenticatd user
+        each client key trackers per IP address or per authenticated user
     """
     
     def __init__(self, max_tokens: int, refill_rate: int, interval: float):

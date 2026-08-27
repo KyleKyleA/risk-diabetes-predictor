@@ -18,7 +18,7 @@ limiter = RateLimiterStore(max_tokens=10, refill_rate=2, interval=1.0)
 @app.middleware("http")
 async def rate_limit_middleware(request: Request, call_next):
     """  
-        Middleware that enfoces per IP rate limiting on every request.
+        Middleware that enforces per IP rate limiting on every request.
         Adds standard rate limit headers to every response
     """
     
