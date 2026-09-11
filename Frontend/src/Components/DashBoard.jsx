@@ -21,55 +21,57 @@ import {
 } from "lucide-react";
 
 // This component will be handled by the machine learning model
+// Using the data from the dataset we are using
 const riskFactors = [
   {
-    name: "A1C result",
-    value: 14,
-    display: "+14 pts",
-    direction: "up",
-    description: "Your average blood sugar over the past 2–3 months.",
-    context: "Your result is 5.8%, just above the usual healthy range.",
+    name: "",
+    value: "",
+    display: "",
+    direction: "",
+    description: "",
+    context: ".",
   },
   {
-    name: "Activity pattern",
-    value: -9,
-    display: "−9 pts",
-    direction: "down",
-    description: "How often you move throughout a typical week.",
-    context: "Your recent movement is helping lower your estimated risk.",
+    name: "",
+    value: "",
+    display: "",
+    direction: "",
+    description: "",
+    context: "",
   },
   {
-    name: "Family history",
-    value: 8,
-    display: "+8 pts",
-    direction: "up",
-    description: "Whether a close family member has had type 2 diabetes.",
+    name: "",
+    value: "",
+    display: "",
+    direction: "",
+    description: "",
     context:
-      "A parent or sibling with type 2 diabetes adds some background risk.",
+      "",
   },
   {
-    name: "Age",
-    value: 6,
-    display: "+6 pts",
-    direction: "up",
-    description: "Age is one of several signals used in the estimate.",
-    context: "Risk tends to change gradually with age, not all at once.",
+    name: "",
+    value: "",
+    display: "",
+    direction: "",
+    description: "",
+    context: "",
   },
   {
-    name: "Sleep consistency",
-    value: -4,
-    display: "−4 pts",
-    direction: "down",
-    description: "How regular your sleep schedule has been recently.",
+    name: "",
+    value: "",
+    display: "",
+    direction: "",
+    description: "",
     context:
-      "More consistent sleep is a small, positive signal in your profile.",
+      "",
   },
 ];
+
+// Values used from the machine learning model to generate the trend chart. These values will be generated from the machine learning model and will be used to generate the trend chart.
 const trendValues = [
-  31, 31, 30, 30, 29, 30, 29, 28, 29, 28, 28, 27, 28, 27, 27, 28, 27, 26,
-  27, 26, 27, 26, 25, 26, 27, 26, 27, 26, 27, 28,
+ 
 ];
-const trendLabels = ["May 08", "May 15", "May 22", "May 29", "Jun 06"];
+const trendLabels = [""];
 const iconTileClass =
   "grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[#eef0ff] text-[#5966cf]";
 function SectionHeader({ eyebrow, title, description, icon }) {
@@ -98,7 +100,7 @@ function FactorChart({ detailed }) {
       <div
         className="mt-[1.15rem] grid grid-cols-[minmax(0,1fr)_2.75rem_minmax(0,1fr)] text-[0.62rem] font-extrabold uppercase tracking-[0.11em] text-[#8990a5]"
         aria-hidden="true"
-      >
+      > 
         <span className="pr-3 text-right">Lowers risk</span>
         <span className="text-center">0</span>
         <span className="pl-3">Raises risk</span>
