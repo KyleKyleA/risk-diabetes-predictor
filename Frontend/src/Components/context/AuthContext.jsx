@@ -1,3 +1,5 @@
+// Description: This file contains a new concept of authentication context for the app. It will provide a way to manage user authentication state and provide access to the current user and token throughout the app.
+
 import {createContext, useState, useEffect, useContext} from "react";
 
 

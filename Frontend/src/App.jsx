@@ -35,22 +35,9 @@ import { FluidParticlesBackground } from "./Components/ui/background.jsx";
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <DiabetesDashboard />
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
-  );
-}
+    <>
+    
+    </>
+)}
 
 export default App;

@@ -24,7 +24,8 @@ import NotFound from './views/NotFound.jsx'
 import Aup from './Components/Aup.jsx';
 import QuestionPage from './Components/QuestionPage';
 import TermsConditions from './Components/TermsConditions';
-
+import ProtectedRoute from './Components/ProtectedRoute.jsx';
+import { AuthProvider } from './Components/context/AuthContext.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -32,7 +33,14 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="login" element={<Login />}/>
       <Route path="signup" element={<Signup />}/>
-      <Route path="dashboard" element={<Dashboard />}/>
+      <Route
+        path="dashboard"
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
       <Route path="about" element={<About />}/>
       <Route path="contact" element={<Contact />}/>
       <Route path="*" element={<NotFound />}/>
@@ -48,6 +56,8 @@ const router = createBrowserRouter(
 
 ReactDom.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+    <AuthProvider>
     <RouterProvider router={router} />
+   </AuthProvider>
   </React.StrictMode>,
 )
