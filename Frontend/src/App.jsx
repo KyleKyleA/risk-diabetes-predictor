@@ -9,10 +9,15 @@ import About from './views/About.jsx'
 import Contact from './views/Contact.jsx'
 import Dashboard from './views/Dashboard.jsx'
 import Home from './views/Home.jsx'
-import Login from './views/Login.jsx'
+import Login from './views/LoginPage.jsx'
 import Signup from './views/Signup.jsx'
 import NotFound from './views/NotFound.jsx'
 import Aup from './Components/Aup.jsx';
+
+import { AuthProvider } from './Components/context/AuthContext.jsx';
+import ProtectedRoute from './Components/ProtectedRoute.jsx';
+import LoginPage from './views/LoginPage.jsx';
+import DiabetesDashboard from './Components/Dashboard.jsx';
 
 
 import { FluidParticlesBackground } from "./Components/ui/background.jsx";
@@ -29,14 +34,23 @@ import { FluidParticlesBackground } from "./Components/ui/background.jsx";
 
 
 function App() {
-  
-
   return (
-    <>
-      
-      
-    </>
-  )
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <DiabetesDashboard />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
+  );
 }
 
 export default App;

@@ -40,7 +40,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 # Create access token for user
 def create_access_token(data: dict, expires_delta: timedelta | None = None):
     to_encode = data.copy()
-    expire = datetime.now(timezone.utc) + (expires_delta or timedelta(minutes=15))
+    expire = datetime.now(timezone.utc) + (expires_delta or timedelta(ACCESS_TOKEN_EXPIRE_MINUTES))
     to_encode.update({"exp": expire})
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 

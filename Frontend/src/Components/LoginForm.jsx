@@ -6,22 +6,19 @@ import {useState} from 'react';
 
 function LoginForm({onSuccess}) {
 
-    const [formData, setFormData] = useState({email: "", password: ""});
+    const [formData, setFormData] = useState({username: "", password: ""});
     const [isLogged, setIsLogged] = useState(false);
     const [errors, setErrors] = useState({});
 
-     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+     
 
     const validateLogin = () => {
         const newErrors = {};
-        const {email, password} = formData
+        const {username, password} = formData
 
-        // validate email
-        if (!email) {
-            newErrors.email = "Email is required";
-
-        } else if (!emailRegex.test(email)) {
-            newErrors.email = "Invalid email format";
+        // Validate username
+        if (!username) {
+            newErrors.username = "Username is required";
         }
 
         if (!password) {
@@ -62,27 +59,33 @@ function LoginForm({onSuccess}) {
 
 
     try {
-        const response = await fetch('/api/login', {
+        const body = new URLSearchParams({
+            username: formData.username,
+            password: formData.password
+        })
+
+
+        const response = await fetch('/token', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json'},
-            body: JSON.stringify(formData)
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
+            body: body,
 
         });
 
         const data = await response.json();
 
         if(!response.ok) {
-            if(data.message === "User not found") {
-                setErrors({ email: "No account found with this email address."});
+            if(data.detail === "User not found") {
+                setErrors({ username: "No account found with this username."});
             } else {
-                setErrors({general: data.message || "Login failed."});
+                setErrors({general: data.detail || "Login failed."});
             }
         } else {
             console.log("Login successfully", data);
-            if (onSuccess) onSuccess(data);
+            if (onSuccess) onSuccess(data.access_token);
         }
     } catch (err) {
-        setErrors("Network error. Please try again.");
+        setErrors({general: "Network error. Please try again."});
     } finally {
         setIsLogged(false);
     }
@@ -96,10 +99,10 @@ function LoginForm({onSuccess}) {
             <form className="flex flex-col items-center text-sm on" onSubmit={handleSubmit}>
     
                 <div className="w-full">
-                    <label className="text-black block mb-1">Email</label>
-                    <input className="rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 text-sm font-normal text-gray-700 outline-none transition-all focus:shadow-soft-primary-outline focus:border-blue-400" type="email" id="email"name="email" value={formData.email} onChange={handleChange} placeholder="Enter Email" required></input>
+                    <label className="text-black block mb-1">Username</label>
+                    <input className="rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 text-sm font-normal text-gray-700 outline-none transition-all focus:shadow-soft-primary-outline focus:border-blue-400" type="text" id="username" name="username" value={formData.username} onChange={handleChange} placeholder="Enter Username" required></input>
                 </div>
-                {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+                {errors.username && <p className="text-red-500 text-xs mt-1">{errors.username}</p>}
                 <br></br>
 
                 <div className="w-full">
@@ -110,6 +113,7 @@ function LoginForm({onSuccess}) {
                 <br></br>
 
                 <button type="submit" disabled={isLogged} className="px-6 py-2 rounded-md text-black font-semibold bg-gradient-to-r from blue-400 to black-500 hover:from-blue-500 hover:to-black-600 transition h-12 w-32 px-4 rounded active:scale-95 transition">{isLogged ? "Logging in..." : "Login"}</button>
+                {errors.general && <p className="text-red-500 text-xs mt-1">{errors.general}</p>}
             </form>
             </div>
 

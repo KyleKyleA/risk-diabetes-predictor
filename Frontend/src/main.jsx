@@ -18,7 +18,7 @@ import About from './views/About.jsx'
 import Contact from './views/Contact.jsx'
 import Dashboard from './views/Dashboard.jsx'
 import Home from './views/Home.jsx'
-import Login from './views/Login.jsx'
+import Login from './views/LoginPage.jsx'
 import Signup from './views/Signup.jsx'
 import NotFound from './views/NotFound.jsx'
 import Aup from './Components/Aup.jsx';
@@ -43,6 +43,8 @@ const router = createBrowserRouter(
     </Route>
   )
 );
+
+
 
 ReactDom.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

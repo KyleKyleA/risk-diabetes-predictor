@@ -1,16 +1,22 @@
 # Author: Kyle Angeles
 # File-Name: main.py
 # This components handles everything for the backend -> rate limit, security, and more 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Depends
 # from .routes import auth
 from fastapi.responses import JSONResponse
+
+from Backend.app.routes.security import get_current_user
 from .middleware.rateLimit import RateLimiterStore
 from .middleware.requestLogger import RequestLoginMiddleware
 import time
+from Backend.app.routes import models
+from .routes import auth
+
+
 
 app = FastAPI()
 app.add_middleware(RequestLoginMiddleware)
-# app.include_router(auth.router)
+app.include_router(auth.router)
 
 
 
@@ -46,7 +52,15 @@ async def rate_limit_middleware(request: Request, call_next):
     response.headers["X-RateLimit-Remaining"] = str(bucket.get_remaining())
     response.headers["X-RateLimit-Reset"] = str(int(bucket.get_reset_time()))
     return response
-    
+
+
+@app.get("/api/dashboard-data") 
+def dashboard_data(current_user: models.User = Depends(get_current_user)):
+    return {
+        "risk_score": 0.75,
+        "trend": "down",
+        "user": current_user.username
+    }
 @app.get("/")
 async def root():
     return {"message": "Testing"}
