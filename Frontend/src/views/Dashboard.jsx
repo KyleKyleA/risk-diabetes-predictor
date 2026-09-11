@@ -1,8 +1,11 @@
+import DiabetesDashboard from "../components/Dashboard.jsx";
+
 function Dashboard() {
 
-    return (
+    return (    
         <>
         
+            <DiabetesDashboard />
         
         </>
 
