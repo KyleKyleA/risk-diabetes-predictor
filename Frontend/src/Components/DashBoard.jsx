@@ -192,6 +192,8 @@ function FactorChart({ detailed }) {
     </div>
   );
 }
+
+// Thinking of using stat chart extension from javascript and use of matplotlib 
 function TrendChart() {
   const points = useMemo(() => {
     const left = 18;
@@ -345,6 +347,8 @@ export default function DiabetesDashboard() {
               </p>
             </div>
           </div>
+
+          // Hopefully to add a real time update clock for each refresh
           <div className="flex w-full items-center justify-between gap-3 sm:w-auto sm:justify-end">
             <div className="flex items-center gap-2 text-[0.7rem] font-medium text-[#81899e]">
               <Clock3 size={14} aria-hidden="true" />
@@ -398,8 +402,7 @@ export default function DiabetesDashboard() {
                 </span>
               </div>
               <p className="m-0 mt-4 max-w-[30rem] text-[0.84rem] leading-relaxed text-[#535e92]">
-                Your results suggest a lower likelihood of developing type 2
-                diabetes in the next 5 years.
+                Your results suggest 
               </p>
               <div
                 className="mt-7 flex items-center gap-3"
@@ -428,9 +431,7 @@ export default function DiabetesDashboard() {
               </button>
               {showMethod && (
                 <p className="m-0 mt-3 rounded-xl border border-[#d8ddfb] bg-white/55 px-4 py-3 text-[0.72rem] leading-relaxed text-[#5d6797]">
-                  This estimate looks at several signals, including A1C,
-                  movement, family history, age, and sleep. It is a starting
-                  point for a conversation with a clinician.
+                 
                 </p>
               )}
             </div>
@@ -453,9 +454,7 @@ export default function DiabetesDashboard() {
               </div>
             </div>
             <p className="m-0 mt-4 text-[0.79rem] leading-relaxed text-[#727b93]">
-              The biggest helpful signals are your activity and more consistent
-              sleep. One thing worth watching is your A1C, which is only
-              slightly above the usual healthy range.
+              
             </p>
             <div className="mt-6 grid grid-cols-2 gap-3">
               <div className="rounded-2xl border border-[#e8ebf2] bg-[#fbfcff] p-3.5">
