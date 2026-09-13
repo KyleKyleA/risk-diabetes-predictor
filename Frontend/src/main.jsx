@@ -26,6 +26,7 @@ import QuestionPage from './Components/QuestionPage';
 import TermsConditions from './Components/TermsConditions';
 import ProtectedRoute from './Components/ProtectedRoute.jsx';
 import { AuthProvider } from './Components/context/AuthContext.jsx';
+import { RiskProvider } from './Components/context/RiskContext.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -57,7 +58,9 @@ const router = createBrowserRouter(
 ReactDom.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <AuthProvider>
+      <RiskProvider>
     <RouterProvider router={router} />
+    </RiskProvider>
    </AuthProvider>
   </React.StrictMode>,
 )

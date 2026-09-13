@@ -25,50 +25,8 @@ import {
 
 // This component will be handled by the machine learning model
 // Using the data from the dataset we are using
-const riskFactors = [
-  {
-    name: "",
-    value: "",
-    display: "",
-    direction: "",
-    description: "",
-    context: ".",
-  },
-  {
-    name: "",
-    value: "",
-    display: "",
-    direction: "",
-    description: "",
-    context: "",
-  },
-  {
-    name: "",
-    value: "",
-    display: "",
-    direction: "",
-    description: "",
-    context:
-      "",
-  },
-  {
-    name: "",
-    value: "",
-    display: "",
-    direction: "",
-    description: "",
-    context: "",
-  },
-  {
-    name: "",
-    value: "",
-    display: "",
-    direction: "",
-    description: "",
-    context:
-      "",
-  },
-];
+const riskFactors = prediction?.top_factors ?? [];
+  
 
 // Values used from the machine learning model to generate the trend chart. These values will be generated from the machine learning model and will be used to generate the trend chart.
 const trendValues = [
@@ -293,14 +251,13 @@ function TrendChart() {
     </div>
   );
 }
-export default function DiabetesDashboard() {
+export default function DiabetesDashboard({ userData, prediction }) {
   const [viewMode, setViewMode] = useState("summary");
   const [showMethod, setShowMethod] = useState(false);
   const [shared, setShared] = useState(false);
   const [downloaded, setDownloaded] = useState(false);
   async function shareSummary() {
-    const summary =
-      "Kyle's Diabetes Risk Predictor Dashboard: current estimate 28 out of 100, in the lower range.";
+      const summary = `${userData?.name ?? "Your"} Diabetes Risk Predictor Dashboard: current estimate ${prediction?.risk_score ?? "N/A"} out of 100, in the ${prediction?.risk_category ?? "unknown"} range.`;
     try {
       await navigator.clipboard?.writeText(summary);
     } catch {
@@ -351,7 +308,7 @@ export default function DiabetesDashboard() {
             </div>
           </div>
 
-          // Hopefully to add a real time update clock for each refresh
+          { /* Hopefully to add a real time update clock for each refresh */ }
           <div className="flex w-full items-center justify-between gap-3 sm:w-auto sm:justify-end">
             <div className="flex items-center gap-2 text-[0.7rem] font-medium text-[#81899e]">
               <Clock3 size={14} aria-hidden="true" />
@@ -398,7 +355,7 @@ export default function DiabetesDashboard() {
               </p>
               <div className="mt-1 flex items-end gap-3">
                 <span className="text-[clamp(4.5rem,9vw,5.7rem)] font-extrabold leading-[0.95] tracking-[-0.09em] text-[#303a8e]">
-                  28
+                  {prediction?.risk_score ?? "-"}
                 </span>
                 <span className="mb-2.5 text-[0.82rem] font-bold text-[#626da9]">
                   out of 100
@@ -409,10 +366,10 @@ export default function DiabetesDashboard() {
               </p>
               <div
                 className="mt-7 flex items-center gap-3"
-                aria-label="Risk score is 28 out of 100"
+                aria-label={`Risk score ${prediction?.risk_score ?? "-"} out of 100`}
               >
                 <div className="h-2 flex-1 overflow-hidden rounded-full bg-[#d5daf8]">
-                  <span className="block h-full w-[28%] rounded-full bg-[#5968d7]" />
+                  <span className="block h-full rounded-full bg-[#5968d7]" style={{ width: `${prediction?.risk_score ?? 0}%` }} />
                 </div>
                 <span className="whitespace-nowrap text-[0.68rem] font-extrabold text-[#5662b8]">
                   Low 0–35
