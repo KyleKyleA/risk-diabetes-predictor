@@ -11,12 +11,14 @@ from .middleware.requestLogger import RequestLoginMiddleware
 import time
 from Backend.app.routes import models
 from .routes import auth
+from .routes import predict
 
 
 
 app = FastAPI()
 app.add_middleware(RequestLoginMiddleware)
 app.include_router(auth.router)
+app.include_router(predict.router)
 
 
 
