@@ -27,6 +27,7 @@ import TermsConditions from './Components/TermsConditions';
 import ProtectedRoute from './Components/ProtectedRoute.jsx';
 import { AuthProvider } from './Components/context/AuthContext.jsx';
 import  RiskProvider from './Components/context/RiskContext.jsx';
+import DiabetesDashboard from './Components/Dashboard.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(

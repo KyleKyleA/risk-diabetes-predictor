@@ -17,26 +17,17 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 
-def get_db():
-    db = supabase
-    try:
-        yield db
-    finally:
-        pass
-        
-        
+            
         
 # TODO:
 # FIX THIS LINE OF CODE      
 @router.post("/signup/", response_model=schema.UserResponse)
 def signup(user: schema.UserCreate):
     # checks if the user has already signed up for the app
-    db_user = db.query(models.User).filter(
-        (models.User.email == user.email) | (models.User.username == user.username)
-    ).first()
-    if db_user:
-        detail = "Email is already registered" if db_user.email == user.email else "Username is already taken"
-        raise HTTPException(status_code=400, detail=detail)
+    existing_user = (
+        supabase.table("users")
+
+    )
     
     # hash password to prevent any hacking
     hashed_password = pwd_context.hash(user.password)
