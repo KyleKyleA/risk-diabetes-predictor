@@ -1,4 +1,4 @@
-import DiabetesDashboard from "../components/Dashboard.jsx";
+import DiabetesDashboard from "../Components/DashBoardComponent.jsx";
 import { useLocation } from "react-router-dom";
 
 

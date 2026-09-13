@@ -27,7 +27,9 @@ import TermsConditions from './Components/TermsConditions';
 import ProtectedRoute from './Components/ProtectedRoute.jsx';
 import { AuthProvider } from './Components/context/AuthContext.jsx';
 import  RiskProvider from './Components/context/RiskContext.jsx';
-import Dashboard from './Components/Dashboard.jsx';
+import Dashboard from './Components/DashBoardComponent.jsx';
+
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<AppLayout />}>

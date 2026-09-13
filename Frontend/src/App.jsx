@@ -17,7 +17,7 @@ import Aup from './Components/Aup.jsx';
 import { AuthProvider } from './Components/context/AuthContext.jsx';
 import ProtectedRoute from './Components/ProtectedRoute.jsx';
 import LoginPage from './views/LoginPage.jsx';
-import DiabetesDashboard from './Components/Dashboard.jsx';
+import DiabetesDashboard from './Components/DashBoardComponent.jsx';
 
 
 import { FluidParticlesBackground } from "./Components/ui/background.jsx";
