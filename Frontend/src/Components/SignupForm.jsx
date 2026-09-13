@@ -94,16 +94,6 @@ function SignUpForm({ onSuccess }) {
         }
 
         try {
-            const { data: authData, error: authError } = await supabase.auth.signUp({
-                email: formData.email,
-                password: formData.password,
-            })
-
-            if (authError) {
-                setSubmitError(authError.message);
-                return;
-            }
-
             const {data, error} = await supabase.auth.signUp({
                 email: formData.email,
                 password: formData.password,
