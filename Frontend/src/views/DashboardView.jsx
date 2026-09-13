@@ -2,7 +2,7 @@ import DiabetesDashboard from "../Components/DashBoardComponent.jsx";
 import { useLocation } from "react-router-dom";
 
 
-function Dashboard() {
+function DashboardView() {
 
     const { riskResult } = useRisk();
 
@@ -21,4 +21,4 @@ function Dashboard() {
 }
 
 
-export default Dashboard;
+export default DashboardView;

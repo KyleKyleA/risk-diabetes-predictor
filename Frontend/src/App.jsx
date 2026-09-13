@@ -7,7 +7,7 @@ import NavBar from "./Components/NavBar";
 import AppLayout from './views/AppLayout.jsx'
 import About from './views/About.jsx'
 import Contact from './views/Contact.jsx'
-import Dashboard from './views/Dashboard.jsx'
+import Dashboard from './views/DashboardView.jsx'
 import Home from './views/Home.jsx'
 import Login from './views/LoginPage.jsx'
 import Signup from './views/Signup.jsx'
