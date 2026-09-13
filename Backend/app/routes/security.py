@@ -7,10 +7,10 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from datetime import datetime, timedelta, timezone
-from ..database import SessionLocal
+from database import supabase
 import os
 from passlib.context import CryptContext
-from . import models
+from . import models 
 from sqlalchemy.orm import Session
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -18,7 +18,7 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 # Configuration
-SECRET_KEY = os.environ.get["SECRET_KEY"]
+SECRET_KEY = os.environ.get("SECRET_KEY")
 if not SECRET_KEY:
     raise RuntimeError("SECRET_KEY environment variable must be set")
 ALGORITHM = "HS256"
@@ -26,11 +26,11 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 
 def get_db():
-    db = SessionLocal()
+    db = supabase()
     try:
         yield db
     finally:
-        db.close()
+        pass
         
         
         
@@ -58,7 +58,8 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
             raise credentials_exception
     except JWTError:
         raise credentials_exception
-    user = db.query(models.User).filter(models.User.username == username).first()
+    response = db.table("user").select("*") .eq("username", username).execute()
+    user = response.data[0] if response.data else None
     if user is None:
         raise credentials_exception
     return user

@@ -7,6 +7,7 @@
 import os
 from supabase import create_client, Client
 
+
 # Assign the values directly as strings (remove os.environ.get)
 url: str = "https://oppakxtfpnkyxvhomfns.supabase.co"
 key: str = "sb_publishable_CpVDaIc1j7fck1aiSdV1GQ_dM9v9pRc"

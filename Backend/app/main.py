@@ -5,13 +5,13 @@ from fastapi import FastAPI, Request, Depends
 # from .routes import auth
 from fastapi.responses import JSONResponse
 
-from Backend.app.routes.security import get_current_user
-from .middleware.rateLimit import RateLimiterStore
-from .middleware.requestLogger import RequestLoginMiddleware
+from routes.security import get_current_user
+from middleware.rateLimit import RateLimiterStore
+from middleware.requestLogger import RequestLoginMiddleware
 import time
-from Backend.app.routes import models
-from .routes import auth
-from .routes import predict
+from routes import models
+from routes import auth
+from routes import predict
 
 
 
