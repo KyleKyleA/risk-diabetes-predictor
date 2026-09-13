@@ -25,14 +25,11 @@ import {
 
 // This component will be handled by the machine learning model
 // Using the data from the dataset we are using
-const riskFactors = prediction?.top_factors ?? [];
+
   
 
 // Values used from the machine learning model to generate the trend chart. These values will be generated from the machine learning model and will be used to generate the trend chart.
-const trendValues = [
- 
-];
-const trendLabels = [""];
+
 const iconTileClass =
   "grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[#eef0ff] text-[#5966cf]";
 function SectionHeader({ eyebrow, title, description, icon }) {
@@ -55,7 +52,7 @@ function SectionHeader({ eyebrow, title, description, icon }) {
     </div>
   );
 }
-function FactorChart({ detailed }) {
+function FactorChart({ detailed, factors }) {
   return (
     <div>
       <div
@@ -70,7 +67,7 @@ function FactorChart({ detailed }) {
         className="mt-3 grid gap-4"
         aria-label="Top five factors that shaped the risk score"
       >
-        {riskFactors.map((factor, index) => {
+        {factors.map((factor, index) => {
           const barWidth = `${Math.round(
             (Math.abs(factor.value) / 16) * 100,
           )}%`;
@@ -155,7 +152,7 @@ function FactorChart({ detailed }) {
 }
 
 // Thinking of using stat chart extension from javascript and use of matplotlib 
-function TrendChart() {
+function TrendChart({ values, labels}) {
   const points = useMemo(() => {
     const left = 18;
     const right = 382;
@@ -163,8 +160,8 @@ function TrendChart() {
     const bottom = 116;
     const min = 23;
     const max = 32;
-    return trendValues.map((value, index) => ({
-      x: left + (index / (trendValues.length - 1)) * (right - left),
+    return values.map((value, index) => ({
+      x: left + (index / (values.length - 1)) * (right - left),
       y: top + ((max - value) / (max - min)) * (bottom - top),
     }));
   }, []);
@@ -236,7 +233,7 @@ function TrendChart() {
           </g>
         </svg>
         <div className="mt-1 flex justify-between text-[0.65rem] font-semibold text-[#8990a5]">
-          {trendLabels.map((label) => (
+          {labels.map((label) => (
             <span key={label}>{label}</span>
           ))}
         </div>
@@ -256,6 +253,12 @@ export default function DiabetesDashboard({ userData, prediction }) {
   const [showMethod, setShowMethod] = useState(false);
   const [shared, setShared] = useState(false);
   const [downloaded, setDownloaded] = useState(false);
+
+
+  const riskFactors = prediction?.top_factors ?? [];
+  const trendValues = prediction?.trend_values ?? [];
+  const trendLabels = prediction?.trend_labels ?? [];
+
   async function shareSummary() {
       const summary = `${userData?.name ?? "Your"} Diabetes Risk Predictor Dashboard: current estimate ${prediction?.risk_score ?? "N/A"} out of 100, in the ${prediction?.risk_category ?? "unknown"} range.`;
     try {
@@ -512,7 +515,7 @@ export default function DiabetesDashboard({ userData, prediction }) {
                   : "Plain-language context for every signal"}
               </span>
             </div>
-            <FactorChart detailed={viewMode === "detailed"} />
+            <FactorChart detailed={viewMode === "detailed"} factors={riskFactors} />
           </div>
           <div className="rounded-3xl border border-[#e3e7f2] bg-white/80 p-5 shadow-[0_12px_30px_rgb(47_56_101_/_3.5%)] sm:p-7">
             <SectionHeader
@@ -521,7 +524,7 @@ export default function DiabetesDashboard({ userData, prediction }) {
               description="Small changes matter. This line shows how your estimated score has moved recently."
               icon={<TrendingDown size={18} />}
             />
-            <TrendChart />
+            <TrendChart values={trendValues} labels={trendLabels} />
             <div className="mt-5 flex items-start gap-3 rounded-2xl bg-[#f8f9fc] p-3 text-[0.68rem] leading-relaxed text-[#777f97]">
               <div className={iconTileClass}>
                 <ArrowDownRight size={15} />
