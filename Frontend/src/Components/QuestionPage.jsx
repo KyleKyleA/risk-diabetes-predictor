@@ -105,8 +105,8 @@ function QuestionPage() {
         {/* Diet and lifestyle questions  */}
         {currentStep === 1 && (
            
-                <>
-                    <div>
+                <div className="">
+                   
                         <h2 className="text-black block mb-1 text-center">
                             Q2. diet
                         </h2>
@@ -118,7 +118,6 @@ function QuestionPage() {
                             <option value="carnivore">Carnivore </option>
                             <option value="vegetarian">vegetarian</option>
                         </select>
-                    </div>
                     <br></br>
                     <div className="">
                         <h2 className="text-black block mb-1">Exercise</h2>
@@ -131,18 +130,18 @@ function QuestionPage() {
                             <option value="vigorous">Vigorous / Daily structured workouts</option>
                         </select>
                          <button type="button" onClick={prevStep} className="px-4 py-2 border rounded-md">Back</button>
-                         <button type="button" onClick={() => setCurrentStep(currentStep + 1)}>Next</button>
+                         <button type="button" onClick={nextStep}>Next</button>
                     </div>
                 
-                </>
+                </div>
         
             )
         }
 
         {/* History */}
         {currentStep === 2 && (
-            <>
             
+            <div className="">
                 <h2 className="text-black text-l">History</h2>
                 <br></br>
                 <label className="text-black block mb-1">Family History</label>
@@ -164,8 +163,8 @@ function QuestionPage() {
                     <textarea id="symptoms" name="symptoms" className="" placeholder="Please enter your answer below" rows={4} onChange={handleChange} value={formData.symptoms} required></textarea>
                 </div>
                  <button type="button" onClick={prevStep} className="px-4 py-2 border rounded-md">Back</button>
-                <button type="button" onClick={() => setCurrentStep(currentStep + 1)}>Next</button>
-            </>
+                <button type="button" onClick={nextStep}>Next</button>
+            </div>
             )
         }
 
@@ -176,7 +175,7 @@ function QuestionPage() {
         { currentStep === 3 && (
 
            
-                <>
+                <div className="">
                     <div className="">
                         <label className="">sleep</label>
                         <p className="">On average, how many hours of sleep do you get per night.</p>
@@ -200,15 +199,16 @@ function QuestionPage() {
                     <button type="button" onClick={prevStep} className="px-4 py-2 border rounded-md">Back</button>
                      <button type="submit" className="px-6 py-2 rounded-md text-black font-semibold bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-500 hover:to-purple-600 transition">Submit</button>
                 </div>
-               
-                </>
-        )
-    }
-        
-            </form>
-            )
-            
-        }
+                </div>
+
+        )}
+        </form>
+);
+}
+
+                
+    
+     
         
         
 

@@ -104,43 +104,49 @@ function SignUpForm({ onSuccess }) {
                 return;
             }
 
-            const {data, error} = await supabase
-            .from('users')
-            .insert([
-                {
-                    user_id: authData.user.id,
-                    name: formData.name,
-                    email: formData.email,
-                    phone: formData.phone, 
-                    dob: formData.dob,
+            const {data, error} = await supabase.auth.signUp({
+                email: formData.email,
+                password: formData.password,
+                options: {
+                    data: {
+                        name: formData.name,
+                        phone: formData.phone,
+                        dob: formData.dob,
+                    }
                 }
-            ])
-            .select();
+            });
 
-        if (error) {
-            if (error.code === '23505') {
-                setSubmitError("An account with this email already has been registered");
-            } else {
-                setSubmitError(error.message);
+            if (authError) {
+                setSubmitError(authError.message);
+                return;
             }
-            return;
-        }
+          
+            
 
-        setIsSubmitted(true);
-        
-        setTimeout(() => {
-            if(onSuccess) onSuccess(data ? data[0] : formData);
-        }, 2000);
+            if (error) {
+                if (error.code === '23505') {
+                    setSubmitError("An account with this email already has been registered");
+                } else {
+                    setSubmitError(error.message);
+                }
+                return;
+            }
 
-        } catch (err) {
-            setSubmitError("Unexpected error occurred while signing up.");
-        }
-    };
+            setIsSubmitted(true);
+            
+            setTimeout(() => {
+                if(onSuccess) onSuccess(data ? data[0] : formData);
+            }, 2000);
 
-        if (isSubmitted) {
+            } catch (err) {
+                setSubmitError("Unexpected error occurred while signing up.");
+            }
+        };
 
-            return <div className='flex justify-center items-center min-h-[300px] text-lg font-semibold text-gray-800'>Redirecting to questionnaire page </div>
-        }
+            if (isSubmitted) {
+
+                return <div className='flex justify-center items-center min-h-[300px] text-lg font-semibold text-gray-800'>Redirecting to questionnaire page </div>
+            }
 
 
 
