@@ -9,8 +9,8 @@ model = None  # Placeholder for the actual model, which should be loaded here
 class PredictionRequest(BaseModel):
     gender: Optional[str] = "Unknown"
     age: Optional [int] = 30
-    hypertension: Optional [float] = 0.0
-    heart_disease: Optional [float] = 0.0
+    hypertension: Optional [float] = 1.0
+    heart_disease: Optional [float] = 1.0
     smoking_history: Optional [str] = "never"
     bmi: Optional [float] = 22.0
     HBA1C_Level: Optional[float] = 5.5

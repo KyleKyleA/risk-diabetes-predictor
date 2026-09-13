@@ -11,27 +11,19 @@ from ..database import supabase
 import os
 from passlib.context import CryptContext
 
-from sqlalchemy.orm import Session
+
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 
 # Configuration
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY", "dev_secret_key_change_in_production")
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 0
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
-
-def get_db():
-    db = supabase
-    try:
-        yield db
-    finally:
-        pass
         
-        
-        
+            
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
@@ -43,7 +35,7 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
 
-def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+def get_current_user(token: str = Depends(oauth2_scheme)) -> dict :
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -56,7 +48,12 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
             raise credentials_exception
     except JWTError:
         raise credentials_exception
-    response = db.table("user").select("*") .eq("username", username).execute()
+    response = (
+        supabase.table("users")
+        .select("*")
+        .eq("username", username)
+        .execute()
+    )
     user = response.data[0] if response.data else None
     if user is None:
         raise credentials_exception

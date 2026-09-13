@@ -57,7 +57,7 @@ async def rate_limit_middleware(request: Request, call_next):
 
 
 @app.get("/api/dashboard-data") 
-def dashboard_data(current_user: models.User = Depends(get_current_user)):
+def dashboard_data(current_user: dict = Depends(get_current_user)):
     return {
         "risk_score": 0.75,
         "trend": "down",
