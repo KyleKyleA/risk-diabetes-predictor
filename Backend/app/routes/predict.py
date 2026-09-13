@@ -1,19 +1,20 @@
 from fastapi import APIRouter, FastAPI, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, Field 
+from typing import Optional 
 
 router = APIRouter()
 model = None  # Placeholder for the actual model, which should be loaded here
 
 
 class PredictionRequest(BaseModel):
-    gender: str
-    age: int
-    hypertension: float
-    heart_disease: float
-    smoking_history: str
-    bmi: float
-    HBA1C_Level: float
-    blood_glucose_level: float
+    gender: Optional[str] = "Unknown"
+    age: Optional [int] = 30
+    hypertension: Optional [float] = 0.0
+    heart_disease: Optional [float] = 0.0
+    smoking_history: Optional [str] = "never"
+    bmi: Optional [float] = 22.0
+    HBA1C_Level: Optional[float] = 5.5
+    blood_glucose_level: Optional [float] = 100.0
     
     
     

@@ -67,8 +67,8 @@ function QuestionPage() {
                 } else {
                     setError(result.message || "Prediction failed. Please try again");
                 }
-            } catch (err) {
-                console.error("Submission error:", err);
+            } catch (error) {
+                console.error("Submission error:", error);
                 setError("Something went wrong while submitting Please try again.");
             } finally {
                 setLoading(false);
