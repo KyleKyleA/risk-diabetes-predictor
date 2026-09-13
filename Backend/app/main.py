@@ -5,20 +5,20 @@ from fastapi import FastAPI, Request, Depends
 # from .routes import auth
 from fastapi.responses import JSONResponse
 
-from routes.security import get_current_user
-from middleware.rateLimit import RateLimiterStore
-from middleware.requestLogger import RequestLoginMiddleware
+from app.routes.security import get_current_user
+from app.middleware.rateLimit import RateLimiterStore
+from app.middleware.requestLogger import RequestLoginMiddleware
 import time
-from routes import models
-from routes import auth
-from routes import predict
+
+from app.routes import auth
+from app.routes import predict
 
 
 
 app = FastAPI()
 app.add_middleware(RequestLoginMiddleware)
 app.include_router(auth.router)
-app.include_router(predict.router)
+app.include_router(predict.router, prefix="/api")
 
 
 

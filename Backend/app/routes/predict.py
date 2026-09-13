@@ -20,6 +20,7 @@ class PredictionRequest(BaseModel):
     
 
 class PredictionResponse(BaseModel):
+    success: bool = True
     risk_score: float # The calculated risk score
     risk_category: str # The category of the risk
     risk_percentage: float # The percentage of risk as a chart -> hopefully to be displayed as different charts
