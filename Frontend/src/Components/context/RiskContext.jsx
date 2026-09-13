@@ -12,9 +12,9 @@ export default function RiskProvider({ children}) {
 
     return (
 
-        <RiskContext.Provide value ={{ riskResult, setRiskResult}}>
+        <RiskContext.Provider value ={{ riskResult, setRiskResult}}>
             {children}
-        </RiskContext.Provide>
+        </RiskContext.Provider>
     );
 }
 
