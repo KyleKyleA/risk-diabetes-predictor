@@ -15,6 +15,9 @@ function SignUpForm({ onSuccess }) {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [errors, setErrors] = useState({});
     const [submitError, setSubmitError] = useState("")
+    const [isLoading, setIsLoading] = useState(false);
+  
+   
 
     const validateSignUp = () => {
         const newErrors = {};
@@ -85,13 +88,21 @@ function SignUpForm({ onSuccess }) {
     const handleSubmit = async (e) => {
 
         e.preventDefault();
+
+        if (isLoading) return;
+
         const newErrors = validateSignUp();
+
+      
 
         // validation 
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
             return;
+        
         }
+
+        setIsLoading(true);
 
         try {
             const {data, error} = await supabase.auth.signUp({
@@ -106,15 +117,14 @@ function SignUpForm({ onSuccess }) {
                 }
             });
 
-            if (authError) {
-                setSubmitError(authError.message);
-                return;
-            }
-          
+    
             
 
             if (error) {
-                if (error.code === '23505') {
+                if (error.code === '429') {
+                    setSubmitError("Too many Sign Up's at the moment please try again. ");
+                }
+                else if (error.code === '23505') {
                     setSubmitError("An account with this email already has been registered");
                 } else {
                     setSubmitError(error.message);
@@ -130,15 +140,22 @@ function SignUpForm({ onSuccess }) {
 
             } catch (err) {
                 setSubmitError("Unexpected error occurred while signing up.");
+            } finally {
+                setIsLoading(true);
             }
         };
 
-            if (isSubmitted) {
+    if (isSubmitted) {
 
-                return <div className='flex justify-center items-center min-h-[300px] text-lg font-semibold text-gray-800'>Redirecting to questionnaire page </div>
-            }
+        return (
+        <div className='flex justify-center items-center min-h-[300px] text-lg font-semibold text-gray-800'>Redirecting to questionnaire page 
+        </div>
+        )
+        
 
-
+    }
+    
+    
 
 
     return (
@@ -200,6 +217,9 @@ function SignUpForm({ onSuccess }) {
         </>
     )
 
+
 }
+
+
 
 export default SignUpForm;
