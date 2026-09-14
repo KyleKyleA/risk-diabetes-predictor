@@ -9,7 +9,7 @@ from app.routes.security import get_current_user
 from app.middleware.rateLimit import RateLimiterStore
 from app.middleware.requestLogger import RequestLoginMiddleware
 import time
-
+from app.routes.predict import router as predict_router
 from app.routes import auth
 from app.routes import predict
 
@@ -17,8 +17,8 @@ from app.routes import predict
 
 app = FastAPI()
 app.add_middleware(RequestLoginMiddleware)
-app.include_router(auth.router)
-app.include_router(predict.router, prefix="/api")
+app.include_router(auth.router, prefix="/api")
+app.include_router(predict_router, prefix="/api")
 
 
 

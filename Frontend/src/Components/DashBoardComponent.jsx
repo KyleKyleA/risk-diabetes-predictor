@@ -7,6 +7,7 @@
 // Modifying some parts of the code for our project scope and what I've documented for this project.
 
 import { useMemo, useState } from "react";
+import { useLocation} from "react-router-dom";
 import {
   Activity,
   ArrowDownRight,
@@ -248,11 +249,18 @@ function TrendChart({ values, labels}) {
     </div>
   );
 }
-export default function DiabetesDashboard({ userData, prediction }) {
+export default function DiabetesDashboard({ userData: propUserData, prediction: propPrediction }) {
+
+  const location = useLocation();
+ 
+
   const [viewMode, setViewMode] = useState("summary");
   const [showMethod, setShowMethod] = useState(false);
   const [shared, setShared] = useState(false);
   const [downloaded, setDownloaded] = useState(false);
+
+  const userData = location.state?.userData || propUserData || {};
+  const prediction = location.state?.prediction || propPrediction || {};
 
 
   const riskFactors = prediction?.top_factors ?? [];
@@ -364,8 +372,8 @@ export default function DiabetesDashboard({ userData, prediction }) {
                   out of 100
                 </span>
               </div>
-              <p className="m-0 mt-4 max-w-[30rem] text-[0.84rem] leading-relaxed text-[#535e92]">
-                Your results suggest 
+             <p className="m-0 mt-4 max-w-[30rem] text-[0.84rem] leading-relaxed text-[#535e92]">
+                Your results suggest a <strong className="capitalize">{prediction?.risk_category ?? "low"}</strong> risk profile. {prediction?.risk_next_steps ?? "Consult a healthcare professional for further evaluation."}
               </p>
               <div
                 className="mt-7 flex items-center gap-3"

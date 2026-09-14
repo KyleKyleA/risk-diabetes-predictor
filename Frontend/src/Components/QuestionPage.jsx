@@ -15,13 +15,21 @@ function QuestionPage() {
         const [errors, setErrors] = useState("");
         const [currentStep, setCurrentStep] = useState(0);
         const [formData, setFormData] = useState ({ 
-            name: "",  // String 
-            diet: "",  // String []
-            exercise: "", // Multiple choice
-            familyHistory: "", // String [ ]
-            sleepHours: "", // Number format 
-            diabetesHistory: "", // yes or no question
+            name: "",
+            gender: "Female",
+            age: 30,
+            hypertension: 0,
+            heart_disease: 0,
+            smoking_history: "never",
+            bmi: 22.0,
+            HBA1C_Level: 5.5,
+            blood_glucose_level: 100.0,
+            diet: "",
+            exercise: "",
+            familyHistory: "",
+            diabetesHistory: "",
             symptoms: "",
+            sleepHours: "7.5",
             diabetesType: "",
 
 
@@ -54,8 +62,14 @@ function QuestionPage() {
             setIsLoading(true);
 
             const payload = {
-                ...formData,
-                sleepHours: formData.sleepHours ? parseFloat(formData.sleepHours) : 0,
+            gender: formData.gender || "Female",
+            age: parseInt(formData.age, 10) || 30,
+            hypertension: parseFloat(formData.hypertension) || 0.0,
+            heart_disease: parseFloat(formData.heart_disease) || 0.0,
+            smoking_history: formData.smoking_history || "never",
+            bmi: parseFloat(formData.bmi) || 22.0,
+            HBA1C_Level: parseFloat(formData.HBA1C_Level) || 5.5,
+            blood_glucose_level: parseFloat(formData.blood_glucose_level) || 100.0,
             };
 
             try {
@@ -74,7 +88,7 @@ function QuestionPage() {
                 const result = await response.json();
 
                 if (result.success) {
-                    navigate("/dashboard", {state: {userData: payload, prediction: result}});
+                    navigate("/dashboard", {state: {userData: formData, prediction: result}});
                 } else {
                     setErrors(result.message || "Prediction failed. Please try again");
                 }
@@ -108,7 +122,12 @@ function QuestionPage() {
         // basic information based on my form data
          return (
             
-            <form onSubmit={handleSubmit} className="">
+            <form onSubmit={handleSubmit} className="pt-4">
+                {errors && (
+                    <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-4">
+                        {errors}
+                    </div>
+                )}
                 {currentStep === 0 && (
            
                 
