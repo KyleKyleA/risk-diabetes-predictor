@@ -11,8 +11,8 @@ function QuestionPage() {
   
 
         const navigate = useNavigate();
-        const [loading, setLoading] = useState(false);
-        const [error, setError] = useState("");
+        const [isLoading, setIsLoading] = useState(false);
+        const [errors, setErrors] = useState("");
         const [currentStep, setCurrentStep] = useState(0);
         const [formData, setFormData] = useState ({ 
             name: "",  // String 
@@ -44,14 +44,25 @@ function QuestionPage() {
 
         const handleSubmit = async (e) => {
             e.preventDefault();
-            setError("");
-            setLoading(true);
+
+            if (isLoading) return;
+
+          
+
+
+            
+            setIsLoading(true);
+
+            const payload = {
+                ...formData,
+                sleepHours: formData.sleepHours ? parseFloat(formData.sleepHours) : 0,
+            };
 
             try {
                 const response = await fetch("/api/predict", {
                     method: "POST",
                     headers: {  "Content-Type": "application/json"  },
-                    body: JSON.stringify(formData),
+                    body: JSON.stringify(payload),
 
                 });
 
@@ -63,26 +74,32 @@ function QuestionPage() {
                 const result = await response.json();
 
                 if (result.success) {
-                    navigate("/dashboard", {state: {userData: formData, prediction: result}});
+                    navigate("/dashboard", {state: {userData: payload, prediction: result}});
                 } else {
-                    setError(result.message || "Prediction failed. Please try again");
+                    setErrors(result.message || "Prediction failed. Please try again");
                 }
-            } catch (error) {
-                console.error("Submission error:", error);
-                setError("Something went wrong while submitting Please try again.");
+            } catch (err) {
+                console.error("Submission error:", err);
+                setErrors("Something went wrong while submitting Please try again.");
             } finally {
-                setLoading(false);
+                setIsLoading(false);
             }
         } 
-         
+        
         const nextStep = () => {
-            if (currentStep === 0 && !formData.name) return alert("Name is required before moving on");
-            setCurrentStep(prev => prev + 1);
+            if (currentStep === 0 && !formData.name.trim()) 
+                setErrors("Name is required before proceeding");
+            return;
+        }
+        setErrors("");
+        setCurrentStep(prev => prev + 1);
         };
 
         const prevStep = () => {
             setCurrentStep((prev) => Math.max(0, prev -1));
         };
+        
+       
 
         // basic information based on my form data
          return (
@@ -91,7 +108,7 @@ function QuestionPage() {
            
                 
                     <div>
-                        <h2 className="text-blue block mb-1">
+                        <h2 className="text-blue-600 block mb-1">
                             Q1. Basic Information
                         </h2>
                         <label className="text-black block mb-1">Name</label>
@@ -111,7 +128,7 @@ function QuestionPage() {
                             Q2. diet
                         </h2>
                         <label className="text-black block mb-1">Diet Preference</label>
-                        <select name="diet" onChange={handleChange} value={formData.diet}>
+                        <select id="diet" name="diet" onChange={handleChange} value={formData.diet} className="">
                             <option value="">Select</option>
                             <option value="vegan">Vegan</option>
                             <option value="omnivore">Omnivore</option>
@@ -179,7 +196,7 @@ function QuestionPage() {
                     <div className="">
                         <label className="">sleep</label>
                         <p className="">On average, how many hours of sleep do you get per night.</p>
-                        <input className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 text-sm" type="number" id="sleepHours" name="sleepHours" min="0" max="24" step="0.5" value={formData.sleepHours || ''} onChange={handleChange} placeholder="e.g 7.5hrs" required></input>
+                        <input className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 text-sm" type="number" id="sleepHours" name="sleepHours" min="0" max="24" step="0.5" value={formData.sleepHours || ''} onChange={handleChange} placeholder="7.5hrs" required></input>
                     </div>
                     <br></br>
                     <div className="">
@@ -197,7 +214,7 @@ function QuestionPage() {
                     </div>
                 <div className="flex justify-between mt-4">
                     <button type="button" onClick={prevStep} className="px-4 py-2 border rounded-md">Back</button>
-                     <button type="submit" className="px-6 py-2 rounded-md text-black font-semibold bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-500 hover:to-purple-600 transition">Submit</button>
+                     <button type="submit" disabled={isLoading} className="px-6 py-2 rounded-md text-black font-semibold bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-500 hover:to-purple-600 transition" >{isLoading ? "Predicting..." : "Submit"}</button>
                 </div>
                 </div>
 
