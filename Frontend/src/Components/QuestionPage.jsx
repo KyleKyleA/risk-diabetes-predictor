@@ -86,8 +86,12 @@ function QuestionPage() {
             }
         } 
         
+
+        
+
+
         const nextStep = () => {
-            if (currentStep === 0 && !formData.name.trim()) 
+            if (currentStep === 0 && !formData.name.trim()) {
                 setErrors("Name is required before proceeding");
             return;
         }
@@ -103,6 +107,7 @@ function QuestionPage() {
 
         // basic information based on my form data
          return (
+            
             <form onSubmit={handleSubmit} className="">
                 {currentStep === 0 && (
            
