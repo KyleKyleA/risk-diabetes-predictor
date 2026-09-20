@@ -7,7 +7,9 @@
 // Modifying some parts of the code for our project scope and what I've documented for this project.
 
 import { useMemo, useState } from "react";
-import { useLocation} from "react-router-dom";
+import { useLocation, useNavigate} from "react-router-dom";
+import {useAuth } from "./context/AuthContext";
+
 import {
   Activity,
   ArrowDownRight,
@@ -27,9 +29,10 @@ import {
 // This component will be handled by the machine learning model
 // Using the data from the dataset we are using
 
-  
+
 
 // Values used from the machine learning model to generate the trend chart. These values will be generated from the machine learning model and will be used to generate the trend chart.
+
 
 const iconTileClass =
   "grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[#eef0ff] text-[#5966cf]";
@@ -153,7 +156,14 @@ function FactorChart({ detailed, factors }) {
 }
 
 // Thinking of using stat chart extension from javascript and use of matplotlib 
-function TrendChart({ values, labels}) {
+function TrendChart({ values = [], labels = []}) {
+  if (values.length < 2) {
+    return (
+      <p className="mt-5 text-sm text-[#7c849d]">
+        Trend data will appear after you complete a questionnaire
+      </p>
+    )
+  }
   const points = useMemo(() => {
     const left = 18;
     const right = 382;
@@ -165,7 +175,7 @@ function TrendChart({ values, labels}) {
       x: left + (index / (values.length - 1)) * (right - left),
       y: top + ((max - value) / (max - min)) * (bottom - top),
     }));
-  }, []);
+  }, [values]);
   const pointString = points
     .map((point) => `${point.x},${point.y}`)
     .join(" ");
@@ -252,7 +262,15 @@ function TrendChart({ values, labels}) {
 export default function DiabetesDashboard({ userData: propUserData, prediction: propPrediction }) {
 
   const location = useLocation();
- 
+  const navigate = useNavigate();
+  const { logout } = useAuth();
+
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login", { replace: true})
+  }
+
 
   const [viewMode, setViewMode] = useState("summary");
   const [showMethod, setShowMethod] = useState(false);
@@ -261,6 +279,7 @@ export default function DiabetesDashboard({ userData: propUserData, prediction: 
 
   const userData = location.state?.userData || propUserData || {};
   const prediction = location.state?.prediction || propPrediction || {};
+  
 
 
   const riskFactors = prediction?.top_factors ?? [];
@@ -664,6 +683,7 @@ export default function DiabetesDashboard({ userData: propUserData, prediction: 
                 ? "Summary ready to save"
                 : "Prepare a share-ready summary"}
             </button>
+            <button onClick={handleLogout} className="mt-5 inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-xl border border-[#5968d7] bg-[#5968d7] px-4 py-2.5 text-[0.72rem] font-bold text-white shadow-[0_8px_18px_rgb(86_101_216_/_18%)] transition hover:border-[#3d4ba7] hover:bg-[#3d4ba7] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#5968d7]" type="button">Logout</button>
           </div>
         </section>
         <footer className="flex flex-col items-start justify-between gap-2 py-6 text-[0.62rem] leading-relaxed text-[#949bae] sm:flex-row sm:items-center">
