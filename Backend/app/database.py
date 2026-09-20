@@ -46,4 +46,4 @@ if __name__ == "__main__":
     if inserted_user:
         print("Successfully registered user: ", inserted_user)
 
-
+# Database didn't change that much but removing that statement at the end for docker testing

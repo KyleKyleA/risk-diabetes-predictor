@@ -16,8 +16,12 @@ router = APIRouter(tags=["auth"])
 
             
         
-# TODO:
-# FIX THIS LINE OF CODE      
+
+# FIX is done
+# through using Codex 
+# through my understanding is by using a try and except statements
+# without removing much code but still returning the credentials
+# and validating user by setting HTTP status codes     
 @router.post("/signup", response_model=schema.UserResponse)
 def signup(user: schema.UserCreate):
     # checks if the user has already signed up for the app
@@ -58,6 +62,7 @@ def signup(user: schema.UserCreate):
 
 
 # Login endpoint api
+# Had to change a couple things but it was broken 
 @router.post("/token")
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
     # database 
