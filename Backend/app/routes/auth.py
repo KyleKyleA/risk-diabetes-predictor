@@ -3,16 +3,14 @@
 # Description: This component is used for the endpoints for the signup and login
 # Basic API structure through FashAPI
 from fastapi import APIRouter, HTTPException, Depends, status
-from pydantic import BaseModel
-from passlib.context import CryptContext
+
 from .. import schema
 from ..database import supabase
-from .security import create_access_token
 from fastapi.security import OAuth2PasswordRequestForm
 
 
 router = APIRouter(tags=["auth"])
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
 
 
 
@@ -23,44 +21,38 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 @router.post("/signup", response_model=schema.UserResponse)
 def signup(user: schema.UserCreate):
     # checks if the user has already signed up for the app
-    existing_user = (
-        supabase.table("users")
-        .select("*")
-        .or_(f"email.eq.{user.email},username.eq.{user.username}")
-        .execute()
-        
-
-    )
-    if existing_user.data:
-        first_match = existing_user.data[0]
-        detail = (
-            "Email is already registered"
-            if first_match.get("email") == user.email
-            else "Username is already taken"
-            
+    try:
+        response = supabase.auth.sign_up(
+            {
+                "email": user.email,
+                "password": user.password,
+                "options": {
+                    "data": {
+                        # Your SQL trigger expects metadata named "name".
+                        "name": user.username,
+                        "phone": user.phone or "",
+                        "dob": str(user.dob) if user.dob else None,
+                    }
+                },
+            }
         )
-        raise HTTPException(status_code=400, detail=detail)
-    
-    # hash password to prevent any hacking
-    hashed_password = pwd_context.hash(user.password)
-    
-    # create new user in the database
-    # Name, Email, Phone, Date of birth, password
-   
-    
-    new_user_payload = {
-        "username": user.username,
-        "email": user.email,
-        "phone": user.phone,
-        "dob": str(user.dob) if user.dob else None,
-        "hashed_password": hashed_password,
+    except Exception:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Could not create account. That email may already be registered.",
+        )
+
+    if not response.user:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Supabase did not create the account.",
+        )
+
+    return {
+        "message": "Account created successfully.",
+        "user_id": response.user.id,
+        "email": response.user.email,
     }
-    
-    response = supabase.table("users").insert(new_user_payload).execute()
-    
-    if not response.data:
-                raise HTTPException(status_code=500, detail="Failed to create user in database")
-    return response.data[0]
     
  
 
@@ -69,26 +61,32 @@ def signup(user: schema.UserCreate):
 @router.post("/token")
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
     # database 
-    response = (
-        supabase.table("users")
-        .select("*")
-        .eq("username", form_data.username)
-        .execute()
-    )
+    try:
+        response = supabase.auth.sign_in_with_password({
+            
+            "email": form_data.username,
+            "password": form_data.password
+        }
+        )
     
-    user = response.data[0] if response.data else None
-    
-    
-    if not user or not pwd_context.verify(form_data.password, user.get("hashed_password")):
+    except Exception:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect username or password",
-            headers={"WWW-Authenticate": "Bearer"},
-            
+            detail= "Incorrect password or email",
+            headers={"WWW-Authenticate": "Bearer"}
+    )
+        
+    if not response.session:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail= "Incorrect password or email",
+            headers={"WWW-Authenticate": "Bearer"}
         )
+    
+   
         
-        
-    access_token = create_access_token(data={"sub": user["username"]})
-    return {"access_token": access_token, "token_type": "bearer"}
-        
+    return {
+        "access_token": response.session.access_token,
+        "token_type": "bearer",
+    }
         

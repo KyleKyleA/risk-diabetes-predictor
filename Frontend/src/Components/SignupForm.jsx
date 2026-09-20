@@ -141,7 +141,7 @@ function SignUpForm({ onSuccess }) {
             } catch (err) {
                 setSubmitError("Unexpected error occurred while signing up.");
             } finally {
-                setIsLoading(true);
+                setIsLoading(false);
             }
         };
 

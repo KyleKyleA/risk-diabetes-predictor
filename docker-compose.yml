@@ -1,14 +1,14 @@
 services:
   backend:
     build:
-      context: ./Backend/app
-      dockerfile: Dockerfile
+      context: ./Backend
+      dockerfile: app/Dockerfile
     container_name: diabetes-backend
     # command: tail -f /dev/null  # <-- ADD THIS LINE HERE
     ports:
       - "8000:8000"
     volumes:
-      - ./Backend/app:/app
+      - ./Backend:/app
     environment:
       - SECRET_KEY=SUSHI_MAKER
       - DATABASE_URL=postgresql://postgres:postgres@db:5432/diabetes_db

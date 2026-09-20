@@ -5,13 +5,13 @@ from fastapi import FastAPI, Request, Depends
 # from .routes import auth
 from fastapi.responses import JSONResponse
 
-from app.routes.security import get_current_user
+from app.database import register_user
 from app.middleware.rateLimit import RateLimiterStore
 from app.middleware.requestLogger import RequestLoginMiddleware
 import time
 from app.routes.predict import router as predict_router
 from app.routes import auth
-from app.routes import predict
+
 
 
 
@@ -23,7 +23,7 @@ app.include_router(predict_router, prefix="/api")
 
 
 # Rate Limiter Module
-limiter = RateLimiterStore(max_tokens=10, refill_rate=2, interval=1.0)
+limiter = RateLimiterStore(max_tokens=100, refill_rate=100, interval=1.0)
 
 @app.middleware("http")
 async def rate_limit_middleware(request: Request, call_next):
@@ -57,12 +57,9 @@ async def rate_limit_middleware(request: Request, call_next):
 
 
 @app.get("/api/dashboard-data") 
-def dashboard_data(current_user: dict = Depends(get_current_user)):
-    return {
-        "risk_score": 0.75,
-        "trend": "down",
-        "user": current_user.username
-    }
+def dashboard_data():
+    return {"risk_score": 0.75, "trend": "down"}
+
 @app.get("/")
 async def root():
     return {"message": "Testing"}

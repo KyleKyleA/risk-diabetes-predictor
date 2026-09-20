@@ -47,6 +47,3 @@ if __name__ == "__main__":
         print("Successfully registered user: ", inserted_user)
 
 
-print("Current users in the database: ")
-all_users = supabase.table("users").select("*").execute()
-print(all_users.data)
