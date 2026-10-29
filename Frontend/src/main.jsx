@@ -28,6 +28,7 @@ import ProtectedRoute from './Components/ProtectedRoute.jsx';
 import { AuthProvider } from './Components/context/AuthContext.jsx';
 import  RiskProvider from './Components/context/RiskContext.jsx';
 import Dashboard from './Components/DashBoardComponent.jsx';
+import StatChart from './Components/StatChart';
 
 
 const router = createBrowserRouter(
@@ -46,6 +47,7 @@ const router = createBrowserRouter(
       />
       <Route path="about" element={<About />}/>
       <Route path="contact" element={<Contact />}/>
+      <Route path="statchart" element={<StatChart />} />
       <Route path="*" element={<NotFound />}/>
       <Route path="aup" element={<Aup />}/>
       <Route path="/questionnaire" element={< QuestionPage />} />
